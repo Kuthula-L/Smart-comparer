@@ -1,1 +1,54 @@
+<template>
+  <style>
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      padding: 10px 0;
+    }
+    .bottom-nav a {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .bottom-nav a.active {
+      color: green; /* text green */
+      font-weight: bold;
+    }
+    .bottom-nav img {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+      filter: grayscale(100%); /* default: grey */
+      transition: filter 0.2s, color 0.2s;
+    }
+    .bottom-nav a.active img {
+      filter: grayscale(0%) hue-rotate(90deg) saturate(500%); /* makes icon green */
+    }
+  </style>
+
+  <nav class="bottom-nav">
+    <a href="home.html">
+      <img src="./icons/home.svg" alt="Home">
+      <span>Home</span>
+    </a>
+    <a href="basket.html">
+      <img src="./icons/basket.svg" alt="Basket">
+      <span>Basket</span>
+    </a>
+    <a href="favorites.html">
+      <img src="./icons/favorites.svg" alt="Favorites">
+      <span>Favorites</span>
+    </a>
+  </nav>
+</template>
 
