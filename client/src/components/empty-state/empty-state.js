@@ -1,89 +1,109 @@
 export default class EmptyState extends HTMLElement {
   constructor() {
     super();
-    // Attach a shadow DOM so styles and content are encapsulated
     this.attachShadow({ mode: 'open' });
+    this.type = this.getAttribute('type') || 'list'; // default type
   }
 
-  // Define which attributes should be observed for changes
   static get observedAttributes() {
-    return ['type']; // The "type" determines what content to show (list, basket, favorites)
+    return ['type'];
   }
 
-  // Whenever the observed attribute changes, update the component content
-  attributeChangedCallback() {
-    this.updateContent();
-  }
-
-  // Called when the component is inserted into the DOM
-  async connectedCallback() {
-    try {
-      // Fetch the external HTML template
-      const res = await fetch('./src/components/empty-state/empty-state.html');
-      const htmlText = await res.text();
-
-      // Parse the HTML text into a DOM document
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlText, 'text/html');
-
-      // Select the <template> element inside that file
-      const template = doc.querySelector('template');
-
-      // Clone the template content and attach it to the shadow DOM
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-      // Fill in the component with appropriate data based on the "type" attribute
-      this.updateContent();
-    } catch (err) {
-      console.error('Error loading empty-state template:', err);
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'type' && oldValue !== newValue) {
+      this.type = newValue;
+      this.render(); // re-render when the type changes
     }
   }
 
-  // This function updates the image, text, and button depending on the "type"
-  updateContent() {
-    // Default to "list" if no type is given
-    const type = this.getAttribute('type') || 'list';
+  async connectedCallback() {
+    await this.loadTemplate();
+    this.render();
+  }
 
-    // Select all elements inside the shadow DOM
-    const title = this.shadowRoot.querySelector('.title');
-    const message = this.shadowRoot.querySelector('.message');
-    const button = this.shadowRoot.querySelector('.action-btn');
-    const img = this.shadowRoot.querySelector('.illustration');
+  // Load HTML template from external file
+  async loadTemplate() {
+    try {
+      // ✅ Corrected fetch path (since index.html is inside src/)
+      const res = await fetch('./components/empty-state/empty-state.html');
+      if (!res.ok) throw new Error(`Failed to fetch template: ${res.status}`);
 
-    // Configuration object for each empty state
-    const configs = {
-      list: {
-        img: './src/components/empty-state/images/list-empty.svg',,
-        title: "No lists yet... let's fix that!",
-        message: 'Nothing here but space. Add groceries one by one, or drop in your grocery list file.',
-        button: '+ Add List'
-      },
-      basket: {
-        img: './src/components/empty-state/images/basket-empty.svg',
-        title: 'Your basket is empty',
-        message: 'Once you add items they will appear here. Looking for ideas?',
-        button: 'Start Comparing'
-      },
-      favorites: {
-        img: './src/components/empty-state/images/favorites-empty.svg',
-        title: 'No favorites yet',
-        message: 'Find something you love, give it a heart, and watch this space fill up with your favorites.',
-        button: 'Start adding your favs'
+      const htmlText = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      const template = doc.querySelector('template');
+
+      if (!template) {
+        console.error('❌ No <template> found in empty-state.html');
+        return;
       }
+
+      // Clear and attach new template content
+      this.shadowRoot.innerHTML = '';
+      this.shadowRoot.appendChild(template.content.cloneNode(true));
+    } catch (err) {
+      console.error('⚠️ Error loading empty-state template:', err);
+    }
+  }
+
+  // Render component content dynamically based on "type"
+  render() {
+    // ✅ Correct image paths based on your folder structure
+    const images = {
+      list: './components/empty-state/images/list-empty.svg',
+      basket: './components/empty-state/images/basket-empty.svg',
+      favorites: './components/empty-state/images/favorites-empty.svg',
     };
 
-    // Pick the matching config for the given type
-    const config = configs[type];
+    // Content for each state type
+    const content = {
+      list: {
+        title: "No lists yet... let’s fix that!",
+        text: "Nothing here but space. Add groceries one by one, or drop in your grocery list file.",
+        button: "Add List",
+        image: images.list,
+      },
+      basket: {
+        title: "Your basket is empty",
+        text: "Once you add items they will appear here. Looking for ideas?",
+        button: "Start Comparing",
+        image: images.basket,
+      },
+      favorites: {
+        title: "No favorites yet",
+        text: "Find something you love, give it a heart, and watch this space fill up with your favorites.",
+        button: "Start adding your favs",
+        image: images.favorites,
+      },
+    };
 
-    // If a valid type was found, apply its values to the template
-    if (config) {
-      img.src = config.img;
-      title.textContent = config.title;
-      message.textContent = config.message;
-      button.textContent = config.button;
+    const state = content[this.type] || content.list;
+    const container = this.shadowRoot.querySelector('.empty-container');
+
+    if (!container) {
+      console.error('⚠️ No element with class .empty-container found in template');
+      return;
+    }
+
+    // Update the component UI
+    container.querySelector('img').src = state.image;
+    container.querySelector('h2').textContent = state.title;
+    container.querySelector('p').textContent = state.text;
+    container.querySelector('button').textContent = state.button;
+
+    // ✅ Add button click functionality
+    const button = container.querySelector('button');
+    if (button) {
+      button.addEventListener('click', () => {
+        console.log(`${this.type} button clicked`);
+        // You can change this to whatever action you want:
+        // Example: navigate to a page, show a popup, etc.
+        alert(`You clicked on: ${state.button}`);
+      });
     }
   }
 }
 
-// Register the <empty-state> custom element
+// Register the component
 customElements.define('empty-state', EmptyState);
+
