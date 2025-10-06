@@ -53,7 +53,7 @@ export default class EmptyState extends HTMLElement {
     // Configuration object for each empty state
     const configs = {
       list: {
-        img: './images/list-empty.svg',
+        img: 'https://github.com/Kuthula-L/Smart-comparer/blob/main/client/src/components/empty-state/images/basket-empty.svg',
         title: "No lists yet... let's fix that!",
         message: 'Nothing here but space. Add groceries one by one, or drop in your grocery list file.',
         button: '+ Add List'
