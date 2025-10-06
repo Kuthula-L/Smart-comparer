@@ -53,19 +53,19 @@ export default class EmptyState extends HTMLElement {
     // Configuration object for each empty state
     const configs = {
       list: {
-        img: './images/list-empty.svg',
+        img: './src/components/empty-state/images/list-empty.svg',,
         title: "No lists yet... let's fix that!",
         message: 'Nothing here but space. Add groceries one by one, or drop in your grocery list file.',
         button: '+ Add List'
       },
       basket: {
-        img: './images/basket-empty.svg',
+        img: './src/components/empty-state/images/basket-empty.svg',
         title: 'Your basket is empty',
         message: 'Once you add items they will appear here. Looking for ideas?',
         button: 'Start Comparing'
       },
       favorites: {
-        img: './images/favorites-empty.svg',
+        img: './src/components/empty-state/images/favorites-empty.svg',
         title: 'No favorites yet',
         message: 'Find something you love, give it a heart, and watch this space fill up with your favorites.',
         button: 'Start adding your favs'
