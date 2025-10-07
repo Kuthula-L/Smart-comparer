@@ -8,9 +8,7 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      border-radius: 1rem;
       background: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       max-width: 300px;
       margin: auto;
       transition: all 0.3s ease;
@@ -41,7 +39,7 @@
 
     /* Rounded yellow button */
     .empty-state button {
-      background-color: #fbbf24; /* yellow base */
+      background-color: #FFC727; /* yellow base */
       color: #000;               /* black text */
       border: none;
       border-radius: 999px;      /* pill shape */
@@ -51,9 +49,80 @@
       transition: background-color 0.2s;
     }
 
+
     /* Slightly darker yellow on hover */
     .empty-state button:hover {
       background-color: #f59e0b;
+    }
+
+    /* === Popup (modal) styling === */
+    .popup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      width: 280px;
+      text-align: center;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.25s ease;
+    }
+
+    .popup-content h3 {
+      margin-bottom: 1rem;
+      color: #1b1b3a;
+    }
+
+    .popup-content input {
+      margin: 1rem 0;
+      width: 100%;
+    }
+
+    .popup-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .popup-buttons button {
+      flex: 1;
+      border-radius: 999px;
+      padding: 0.5rem;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .cancel-btn {
+      background: #ccc;
+      color: #000;
+    }
+
+    .cancel-btn:hover {
+      background: #aaa;
+    }
+
+    .confirm-btn {
+      background-color: #FFC727;
+    }
+   
+
+    .confirm-btn:hover {
+      background-color: #f59e0b;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 
@@ -63,5 +132,17 @@
     <h2 class="title"></h2>
     <p class="message"></p>
     <button class="action-btn"></button>
+  </div>
+
+  <!-- Upload popup -->
+  <div class="popup" id="uploadPopup">
+    <div class="popup-content">
+      <h3>Upload your list</h3>
+      <input type="file" id="fileInput" accept=".csv,.txt">
+      <div class="popup-buttons">
+        <button class="cancel-btn" id="cancelBtn">Cancel</button>
+        <button class="confirm-btn" id="confirmBtn">Upload</button>
+      </div>
+    </div>
   </div>
 </template>
