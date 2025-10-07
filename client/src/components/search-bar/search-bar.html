@@ -1,0 +1,70 @@
+<template id="search-bar-template">
+  <style>
+    /* Main container */
+    .search-container {
+      display: flex;
+      justify-content: center; 
+      margin-top: 20px;        
+    }
+    .search-bar {
+      position: fixed;
+      border: 2px solid #F2EC9B;
+      border-radius: 25px;
+      box-shadow: 1px 1px;
+      width: 300px;
+      height: 15px;
+     
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      padding: 10px 35px 10px 15px;
+      font-size: 16px; 
+      outline: none;
+      transition: border-color 0.3s;
+      color:black;
+    }
+
+    .search-icon {
+      width: 21px;
+      height: 22px;
+      color: #999999;
+      font-family: 'SF Pro', sans-serif;
+      font-size: 17px;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    input {
+      border: none;
+      outline: none;
+      flex: 1;
+      height: 100%;
+      font-family: 'SF Pro', sans-serif;
+      font-size: 17px;
+      color: #999999;
+      background: transparent;
+      padding-left: 8px;
+    }
+
+    .clear-icon {
+      width: 17px;
+      height: 22px;
+      color: #999999;
+      font-family: 'SF Pro', sans-serif;
+      font-size: 17px;
+      line-height: 22px;
+      cursor: pointer;
+      display: none; /* hidden until text appears */
+    }
+  </style>
+  <div class="search-container">
+    <div class="search-bar">
+      <span class="search-icon"><img src="./search-svgrepo-com.svg" width="20" height="20" alt="Search" /></span>
+      <input type="text" placeholder="Search..." />
+      <span class="clear-icon">✖</span>
+  </div>
+  </div>
+</template>
