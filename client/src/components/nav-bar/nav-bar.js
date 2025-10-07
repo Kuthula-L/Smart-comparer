@@ -6,28 +6,20 @@ export default class BottomNav extends HTMLElement {
 
   async connectedCallback() {
     try {
-      const res = await fetch('./src/components/bottom-nav/bottom-nav.html');
-      if (!res.ok) {
-        console.error('Failed to fetch template:', res.status, res.statusText);
-        return;
-      }
+      const res = await fetch('./src/components/nav-bar/nav-bar.html');
+      if (!res.ok) throw new Error(`Failed to fetch template: ${res.status}`);
 
       const htmlText = await res.text();
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlText, 'text/html');
       const template = doc.querySelector('template');
 
-      if (!template) {
-        console.error('No <template> found in bottom-nav.html');
-        return;
-      }
+      if (!template) throw new Error('No <template> found');
 
       this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-      // Highlight current page
       this.highlightCurrentPage();
     } catch (err) {
-      console.error('Error loading bottom nav template:', err);
+      console.error(err);
     }
   }
 
@@ -36,8 +28,7 @@ export default class BottomNav extends HTMLElement {
     const links = this.shadowRoot.querySelectorAll('.bottom-nav a');
 
     links.forEach(link => {
-      const href = link.getAttribute('href');
-      if (href === currentPath) {
+      if (link.getAttribute('href') === currentPath) {
         link.classList.add('active');
       } else {
         link.classList.remove('active');
@@ -47,4 +38,5 @@ export default class BottomNav extends HTMLElement {
 }
 
 customElements.define('bottom-nav', BottomNav);
+
 
