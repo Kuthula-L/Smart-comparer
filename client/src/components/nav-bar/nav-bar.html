@@ -1,59 +1,59 @@
-<template>
+<template id="bottom-nav-template">
   <style>
-  ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-.bottom-nav {
-    position: fixed;       
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #f9f9f9;
-    border-radius: 40px;   
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    width: 300px;          
-  }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
 
-  .bottom-nav a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #223;
-    font-size: 12px;
-  }
-    
+    .bottom-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f9f9f9;
+      border-radius: 25px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 20px;
+      
+      width: 300px;
+    }
+
+    .bottom-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #223;
+      font-size: 12px;
+    }
+
     .bottom-nav img {
       width: 24px;
       height: 24px;
       margin-bottom: 4px;
-      filter: grayscale(100%); /* default: grey */
-      transition: filter 0.2s, color 0.2s;
+      filter: grayscale(100%);
     }
+
     .bottom-nav a.active img {
-      filter: grayscale(0%) hue-rotate(90deg) saturate(500%); /* makes icon green */
+      filter: none;
     }
   </style>
 
   <nav class="bottom-nav">
-    <a href="home.html">
-      <img src="./icons/home.svg" alt="Home">
+    <a href="#" class="active">
+      <img src="./home-angle-svgrepo-com.svg" alt="Home">
       <span>Home</span>
     </a>
-    <a href="basket.html">
-      <img src="./icons/basket.svg" alt="Basket">
+    <a href="#">
+      <img src="./cart-3-svgrepo-com.svg" alt="Basket">
       <span>Basket</span>
     </a>
-    <a href="favorites.html">
-      <img src="./icons/favorites.svg" alt="Favorites">
+    <a href="#">
+      <img src="./bag-heart-svgrepo-com.svg" alt="Favorites">
       <span>Favorites</span>
     </a>
   </nav>
 </template>
-
