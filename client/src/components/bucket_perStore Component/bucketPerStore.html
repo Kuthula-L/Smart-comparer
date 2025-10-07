@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basket totals per store</title>
+    <style>
+      /* basic page layout */
+      body {
+        font-family: "Heletica Neue", Arial, Helvetica, sans-serif;
+        margin: 24px;
+        background: #fff;
+        color: #111;
+      }
+      .store-logo {
+        width: 35px;
+        height: 35px;
+        margin-top: -2px;
+        margin-left: -2px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 30px;
+        color: white;
+        background: linear-gradient(#3fb6a8);
+      }
+      /* store name text */
+      .store-meta {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .store-amount {
+        font-size: 18px;
+        color: white;
+        position: absolute;
+        margin-top: -26px;
+        margin-left: 33px;
+      }
+      .storeButton {
+        width: 100px;
+        height: 40px;
+        color: #b0ffec;
+        border: none;
+        border-radius: 30px;
+        background-color: #b0ffec;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <h2>Basket totals per store</h2>
+    <template id="box-template">
+      <div class="box" style="width: 100px; height: 100px"></div>
+    </template> -->
+    <!-- shoprite component -->
+    <div id="Checkers" class="store-baket" role="group">
+      <!-- store logo -->
+      <button class="storeButton">
+        <div class="store-logo" aria-hidden="true">C</div>
+        <div class="store-meta">
+          <div class="store-amount">R1000</div>
+        </div>
+      </button>
+    </div>
+    <script type="module" src="bucketPerStore.js"></script>
+  </body>
+</html>
