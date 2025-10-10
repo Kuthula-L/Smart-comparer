@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SECRET_KEY = config("SECRET_KEY")
+DATABASE_URL = config("URL")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -37,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'rest_framework',
+    'accounts',
+
+    
 ]
 
 MIDDLEWARE = [
@@ -67,7 +74,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'smartcomparer.wsgi.application'
-
+GOOGLE_CLIENT_ID = 'your-client-id'
+GOOGLE_CLIENT_SECRET = 'your-client-secret'
+GOOGLE_REDIRECT_URI = 'http://localhost:8000/api/auth/google/callback/'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
