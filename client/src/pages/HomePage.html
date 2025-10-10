@@ -58,14 +58,13 @@
     </div>
     <search-bar></search-bar>
     <bottom-nav></bottom-nav>
-    <script type="module" src="src/components/search-bar/search-bar.js"></script>
-    <script type="module" src="src/components/nav-bar/nav-bar.js"> </script>
+    <script type="module" src="/src/components/search-bar/search-bar.js"></script>
+    <script type="module" src="/src/components/nav-bar/nav-bar.js"> </script>
+
     <script>
       document.querySelector("search-bar").addEventListener("search-changed", e => {
         console.log("Search value:", e.detail);
       });
     </script>
-
-    <script type="module" src="./exmaple.js"></script>
   </body>
 </html>
