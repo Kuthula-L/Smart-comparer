@@ -4,6 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home Page</title>
+    <style>
+      .Header {
+        position: fixed;
+        top: 0;
+        left: 46%;
+        transform: translateX(-50%);
+        z-index: 1000;
+      }
+      body {
+        margin: 0;
+      }
+      /* reduces the header for the smaller screens */
+      @media (max-width: 420px) {
+        .Header {
+          padding: 10px 12px;
+          border-radius: 0 0 8px 8px;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="Header">
@@ -39,24 +58,27 @@
         </div>
         <div class="logoutIcon">
           <!-- Put a link that is going to direct a this log out icon to -->
-          <a href="">
-            <img
-              src="logout-svgrepo-com.svg"
-              style="
-                position: absolute;
-                width: 35px;
-                height: 35px;
-                border-radius: 40%;
-                margin-top: -28px;
-                margin-left: 390px;
-              "
-              alt="Logout"
-            />
-          </a>
+          <nav>
+            <a href="HomePage.html"></a>
+            <a href="HomePage.html">
+              <img
+                src="logout-svgrepo-com.svg"
+                style="
+                  position: absolute;
+                  width: 35px;
+                  height: 35px;
+                  border-radius: 40%;
+                  margin-top: -28px;
+                  margin-left: 360px;
+                "
+                alt="Logout"
+              />
+            </a>
+          </nav>
         </div>
       </div>
     </div>
 
-    <script type="module" src="./exmaple.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
