@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Price Comparer</title>
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo and Header -->
+            <img class="logo" src="/Smart-Comparer-Logo.png"> <alt="Smart Comparer Logo">
+            <h1 class="auth-subtitle">Smart Comparer</h1>
+            <p class="app-description">We compare prices across trusted stores</p>
+            
+            <!-- Google Button -->
+            <button class="btn-google" id="google-login">
+                <img class="google-icon" src="https://static.vecteezy.com/system/resources/previews/011/598/471/original/google-logo-icon-illustration-free-vector.jpg" alt="Google">Continue with Google
+            </button>
+            
+            <!-- OR Divider -->
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span class="divider-text">or</span>
+                <div class="divider-line"></div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form" action="../../pages/HomePage.html">
+                <input type="email" placeholder="Enter Email" class="form-input" required>
+                <input type="password" placeholder="Enter Password" class="form-input" required>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+            
+            <!-- Auth Switch -->
+            <div class="auth-switch">
+                <span>Don't have an account? </span>
+                <a href="signup.html">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

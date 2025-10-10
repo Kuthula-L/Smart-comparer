@@ -1,0 +1,56 @@
+from multiprocessing import JoinableQueue
+from urllib import response
+from django.http import HttpRequest, JsonResponse
+import jwt
+import json
+from django.shortcuts import render
+import dns.resolver
+import uuid
+from decouple import config
+from supabase import Client, create_client
+
+# payload = {"userId":32, "exp":"time"}
+
+key = config('SECRET_KEY')
+url = config("URL")
+supabase: Client = create_client(str(url), str(key))
+# Create your views here.
+def login(request):
+    userId = 1
+    
+    payload = {
+        "userId":userId,
+        "exp":"time"
+    }
+    data = json.load(request.body)
+    email = data["email"]
+    passkey = data["password"]
+    domain = email.split('@')[1]
+    token = jwt.encode(payload, "random string", algorithm="HS256")
+         
+    return  JsonResponse({"token":token})
+def register(request):
+    user_uuid = uuid.uuid4()
+    payload = {"userid":user_uuid, "exp": "time"}
+    data = json.load(request.data)
+    email = data["email"]
+    passkey = data["password"]
+    token = jwt.encode(payload, "random string", algorithm="HS256")
+    domain = email.split('@')[1]
+    
+    try:
+        dns.resolver.resolve(domain, 'MX')
+        return  JsonResponse({"token":token})
+    except:
+        return JsonResponse({"massage":False})
+       
+def verify_token(request):
+    data = json.load(request.data)
+    token = data["token"]
+    status = jwt.decode(token, "random string", algorithm="HS256")
+    
+    return JsonResponse({"massage":False})
+    
+
+def oAuth():
+    return JsonResponse({"Link":""})
