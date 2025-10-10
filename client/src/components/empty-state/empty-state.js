@@ -17,7 +17,7 @@ export default class EmptyState extends HTMLElement {
 
   async connectedCallback() {
     try {
-      const res = await fetch('./src/components/empty-state/empty-state.html');
+      const res = await fetch('/src/components/empty-state/empty-state.html');
       const htmlText = await res.text();
 
       const parser = new DOMParser();
@@ -26,7 +26,7 @@ export default class EmptyState extends HTMLElement {
 
       this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-      this.updateContent(); // ✅ call AFTER template appended
+      this.updateContent(); 
     } catch (err) {
       console.error('Error loading empty-state template:', err);
     }
@@ -48,25 +48,25 @@ export default class EmptyState extends HTMLElement {
 
     const configs = {
       list: {
-        img: './list-empty.svg',
+        img: '/list-empty.svg',
         title: "No lists yet... let's fix that!",
         message:
           'Nothing here but space. Add groceries one by one, or drop in your grocery list file.',
         button: { text: 'Upload List'}
       },
       basket: {
-        img: './basket-empty.svg',
+        img: '/basket-empty.svg',
         title: 'Your basket is empty',
         message:
           'Once you add items they will appear here. Looking for ideas?',
-        button: { text: 'Start Comparing', link: '/compare' }
+        button: { text: 'Start Comparing', link: '/src/pages/HomePage.html' }
       },
       favorites: {
-        img: './favorites-empty.svg',
+        img: '/favorites-empty.svg',
         title: 'No favorites yet',
         message:
           'Find something you love, give it a heart, and watch this space fill up with your favorites.',
-        button: { text: 'Start adding your favs', link: '/favorites' }
+        button: { text: 'Start adding your favs', link: '/src/pages/HomePage.html' }
       }
     };
 
