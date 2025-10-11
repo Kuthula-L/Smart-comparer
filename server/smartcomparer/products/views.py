@@ -4,8 +4,6 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from pydantic import Json
 import json
-
-from server.smartcomparer.Scraper.scraper.store_data import PicknPay, Shoprite, WoolWorths
 from .utils import findProducts, get_compared_data
 from .utils import getPage_Data
 from .utils import supabase
