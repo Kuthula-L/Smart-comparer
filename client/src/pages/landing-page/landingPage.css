@@ -1,0 +1,23 @@
+.landing-page-compare-button{
+        position: absolute;
+        left: 10px;
+        top: 265px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        background: linear-gradient(90deg, #E5A000, #F6B000);
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        width: fit-content;
+        white-space: nowrap;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        text-decoration: none; /* remove underline */
+      }
+.landing-page-compare-button:focus { outline: 3px solid rgba(0,0,0,0.12); }
