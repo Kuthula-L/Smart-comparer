@@ -30,7 +30,7 @@ const STORE_THEMES = {
 };
 
 // Base folder where your SVG logos live. Change this if your static path differs.
-const LOGO_BASE = "/assets/logos";
+const LOGO_BASE = "/";
 
 // Explicit mapping from normalized store key -> filename (SVG).
 // Normalized keys are produced by normalizeStoreName(), so 'Pick n Pay' -> 'picknpay'
@@ -349,6 +349,6 @@ export default class ProductCard extends HTMLElement {
 }
 
 // register the element (safe to call multiple times)
-// if (!customElements.get("product-card")) {
-//   customElements.define("product-card", ProductCard);
-// }
+if (!customElements.get("product-card")) {
+  customElements.define("product-card", ProductCard);
+}

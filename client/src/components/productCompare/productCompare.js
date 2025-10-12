@@ -1,9 +1,13 @@
+// ✅ productCompare.js (optimized and cached version)
+
+let cachedTemplate = null; // Cache template so it’s fetched only once
+
 export default class ProductCompare extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
 
-    // You can define defaults if you want (like product title, price)
+    // Default values
     this.title = this.getAttribute('title') || 'Product Name';
     this.price = this.getAttribute('price') || 'N/A';
     this.image = this.getAttribute('image') || 'download.png';
@@ -22,24 +26,27 @@ export default class ProductCompare extends HTMLElement {
 
   async connectedCallback() {
     try {
-      // match how example.js loads its template
-      const res = await fetch('/src/components/productCompare/productCompare.html');
-      if (!res.ok) {
-        console.error('Failed to fetch template:', res.status, res.statusText);
-        return;
+      // ✅ Fetch template only once
+      if (!cachedTemplate) {
+        const res = await fetch('/src/components/productCompare/productCompare.html');
+        if (!res.ok) {
+          console.error('Failed to fetch template:', res.status, res.statusText);
+          return;
+        }
+
+        const htmlText = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, 'text/html');
+        cachedTemplate = doc.querySelector('template#CompareProductComponent');
+
+        if (!cachedTemplate) {
+          console.error('No <template> found with id="CompareProductComponent"');
+          return;
+        }
       }
 
-      const htmlText = await res.text();
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlText, 'text/html');
-      const template = doc.querySelector('template#CompareProductComponent');
-
-      if (!template) {
-        console.error('No <template> found with id="CompareProductComponent"');
-        return;
-      }
-
-      this.shadowRoot.appendChild(template.content.cloneNode(true));
+      // ✅ Clone from cache instead of re-fetching
+      this.shadowRoot.appendChild(cachedTemplate.content.cloneNode(true));
 
       this.render(); // fill data after loading
     } catch (err) {

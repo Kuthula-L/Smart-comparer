@@ -194,7 +194,6 @@
 
 const searchBar = document.querySelector("search-bar"); 
 let data = {};
-
 // Listen for Enter key
 document.addEventListener("keydown", async (event) => {
   if (event.key === "Enter") {
@@ -247,6 +246,8 @@ function addProducts(feed) {
   container.innerHTML = ""; // clear previous results
 
   // Add compared items (if exist)
+
+  let duplicates = [];
   if (Array.isArray(comparedList)) {
     comparedList.forEach((item) => {
       container.innerHTML += ProductCompare(
@@ -254,8 +255,22 @@ function addProducts(feed) {
         item["compared_price"],
         item["base_image"] || ""
       );
+
+    //     let el = ProductCompare( item["product_name"],
+    //     item["compared_price"],
+    //     item["base_image"] || ""
+    //   );
+
+    //   duplicates.push(el)
+
+        // container.appendChild(el)
     });
   }
+
+
+//   duplicates.forEach(element => {
+//     if
+//   });
 
   // Add uncomparable items
   for (let i = 0; i < size; i++) {
@@ -281,6 +296,15 @@ function ProductCompare(name, price, image) {
    <product-compare title="${name}" price="R${price}" image="${image}"> </product-compare>
   `;
 }
+// function ProductCompare(name, price, image) {
+
+//     const el = document.createElement("product-compare");
+//     el.setAttribute("title", name);
+//     el.setAttribute("price", price);
+//     el.setAttribute("image", image);
+//     // container.appendChild(el);
+//   return el;
+// }
 
 function ProductCard(name, store, price = "", image = "", logo = "", dataId = "") {
   return `
@@ -294,6 +318,8 @@ function ProductCard(name, store, price = "", image = "", logo = "", dataId = ""
     ></product-card>
   `;
 }
+
+// console.log(data)
  // <div class="product-card" data-store="${store}">
     //   <h4>${name}</h4>
     //   <p>${store}</p>
