@@ -1,3 +1,18 @@
+// === Backend helper to send data to Django ===
+async function postToBackend(path, payload) {
+    try {
+        const res = await fetch(`http://127.0.0.1:8000/products/${path}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        return await res.json();
+    } catch (err) {
+        console.error("Backend call failed:", err);
+        return null;
+    }
+}
+
 const STORE_THEMES = {
   woolworths: {
     borderColor: "#111111",
@@ -161,6 +176,22 @@ export default class ProductCard extends HTMLElement {
       })
     );
 
+    // === NEW: send to backend ==
+    (function () {
+        const product = {};
+        if (payload.name) product.Product_name = payload.name;
+        if (payload.price != null) product.Price = payload.price;
+        if (payload.store) product.Store = payload.store;
+          if (payload.image) product.Image = payload.image; // include only if present
+
+        // Do not send uuid if you no longer use UUIDs server-side
+        postToBackend("addToBasket/", { product })
+            .then(() => {
+                  // optional: refresh UI or log
+            })
+            .catch((err) => console.error("addToBasket failed", err));
+    })();
+
     // optional immediate navigation (if navigate-to attribute present)
     const nav = this.getAttribute("navigate-to");
     if (nav) {
@@ -220,6 +251,34 @@ export default class ProductCard extends HTMLElement {
         composed: true,
       })
     );
+
+    // === send favourite/unfavourite to backend ===
+    (function () {
+        const product = {};
+        const name = this.getAttribute("name");
+        const priceRaw = this.getAttribute("price");
+        const price = priceRaw ? Number(priceRaw) : null;
+        if (name) product.Product_name = name;
+        if (price != null && !Number.isNaN(price)) product.Price = price;
+        const store = this.getAttribute("store");
+        if (store) product.Store = store;
+        const image = this.getAttribute("image");
+        if (image) product.Image = image; // include only when present
+
+        if (this._fav) {
+            postToBackend("addToFavourites/", { product })
+                .then(() => {
+                    // optional: update UI
+                })
+                .catch((err) => console.error("addToFavourites failed", err));
+        } else {
+            postToBackend("removeFromFavourites/", { product_id: name })
+                .then(() => {
+                    // optional
+                })
+                .catch((err) => console.error("removeFromFavourites failed", err));
+        }
+    })();
   }
 
   // populate nodes from attributes and apply theme

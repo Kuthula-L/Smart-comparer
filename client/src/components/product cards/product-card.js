@@ -1,3 +1,19 @@
+// === Backend helper to send data to Django ===
+async function postToBackend(path, payload) {
+    try {
+        const res = await fetch(`http://127.0.0.1:8000/products/${path}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        // try parse JSON safely
+        return await res.json();
+    } catch (err) {
+        console.error("Backend call failed:", err);
+        return null;
+    }
+}
+
 // product-card.js
 const STORE_THEMES = {
   woolworths: {
@@ -362,6 +378,21 @@ export default class ProductCard extends HTMLElement {
       })
     );
 
+    // send to backend (omit uuid if not used; include Image only when present)
+    (function () {
+        const product = {};
+        if (payload.name) product.Product_name = payload.name;
+        if (payload.price != null) product.Price = payload.price;
+        if (payload.store) product.Store = payload.store;
+        if (payload.image) product.Image = payload.image;
+
+        postToBackend("addToBasket/", { product })
+            .then(() => {
+                // optional: update UI or refresh
+            })
+            .catch((err) => console.error("addToBasket failed", err));
+    })();
+
     const nav = this.getAttribute("navigate-to");
     if (nav) {
       try {
@@ -420,6 +451,27 @@ export default class ProductCard extends HTMLElement {
         composed: true,
       })
     );
+    // send favourite/unfavourite to backend (omit uuid)
+    (function () {
+        const product = {};
+        const name = this.getAttribute("name");
+        const priceRaw = this.getAttribute("price");
+        const price = priceRaw ? Number(priceRaw) : null;
+        if (name) product.Product_name = name;
+        if (price != null && !Number.isNaN(price)) product.Price = price;
+        const store = this.getAttribute("store");
+        if (store) product.Store = store;
+        const image = this.getAttribute("image");
+        if (image) product.Image = image;
+
+        if (this._fav) {
+            postToBackend("addToFavourites/", { product })
+                .catch((err) => console.error("addToFavourites failed", err));
+        } else {
+            postToBackend("removeFromFavourites/", { product_id: name })
+                .catch((err) => console.error("removeFromFavourites failed", err));
+        }
+    })();
   }
 
   _render() {
