@@ -192,7 +192,7 @@
 // init()
 
 
-const searchBar = document.querySelector("search-bar");
+const searchBar = document.querySelector("search-bar"); 
 let data = {};
 
 // Listen for Enter key
@@ -230,6 +230,8 @@ document.addEventListener("keydown", async (event) => {
 function addProducts(feed) {
   if (!feed) return;
 
+//   basketdata[0]["product_name"] = "albany"
+
   const comparedList = feed["compared_data"] || [];
   const uncomparedList = feed["uncomparable_data"] || {};
 
@@ -249,8 +251,8 @@ function addProducts(feed) {
     comparedList.forEach((item) => {
       container.innerHTML += ProductCompare(
         item["product_name"],
-        item["compared_store"],
-        item["image"] || ""
+        item["compared_price"],
+        item["base_image"] || ""
       );
     });
   }
@@ -265,21 +267,34 @@ function addProducts(feed) {
 }
 
 // Helper templates
-function ProductCompare(name, avgPrice, img) {
+// function ProductCompare(name, avgPrice, img) {
+//   return `
+//     <div class="product-compare">
+//       <img src="${img}" alt="${name}" width="100" height="100">
+//       <h3>${name}</h3>
+//       <p>Avg Price: ${avgPrice}</p>
+//     </div>
+//   `;
+// }
+function ProductCompare(name, price, image) {
   return `
-    <div class="product-compare">
-      <img src="${img}" alt="${name}" width="100" height="100">
-      <h3>${name}</h3>
-      <p>Avg Price: ${avgPrice}</p>
-    </div>
+   <product-compare title="${name}" price="R${price}" image="${image}"> </product-compare>
   `;
 }
 
 function ProductCard(name, store, price = "", image = "", logo = "", dataId = "") {
   return `
-    <div class="product-card" data-store="${store}">
-      <h4>${name}</h4>
-      <p>${store}</p>
-    </div>
+    <product-card
+    store="${store}"
+    name="${name}"
+    price="${price}"
+    sale="R12.50"
+    image="${image}"
+    logo-src=""
+    ></product-card>
   `;
 }
+ // <div class="product-card" data-store="${store}">
+    //   <h4>${name}</h4>
+    //   <p>${store}</p>
+    // </div>

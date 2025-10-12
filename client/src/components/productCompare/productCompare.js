@@ -23,7 +23,7 @@ export default class ProductCompare extends HTMLElement {
   async connectedCallback() {
     try {
       // match how example.js loads its template
-      const res = await fetch('./src/components/productCompare/productCompare.html');
+      const res = await fetch('/src/components/productCompare/productCompare.html');
       if (!res.ok) {
         console.error('Failed to fetch template:', res.status, res.statusText);
         return;
