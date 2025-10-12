@@ -1,8 +1,7 @@
 import Box from "./components/example/exmaple"
 // import filter from "./components/filter/filter"
 import Header from "./components/header/header";
-import LandingPage from "./pages/landing page/LandingPage";
-import ProductCard from "./components/product-cards/product-card";
+import LandingPage from "./pages/landing-page/LandingPage";
 // import component class from "./components/example/exmaple"
 
 // const app = document.getElementById('app');
