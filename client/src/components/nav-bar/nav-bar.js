@@ -6,7 +6,7 @@ export default class BottomNav extends HTMLElement {
 
   async connectedCallback() {
     try {
-      const res = await fetch('./src/components/nav-bar/nav-bar.html');
+      const res = await fetch('/src/components/nav-bar/nav-bar.html');
       if (!res.ok) throw new Error(`Failed to fetch template: ${res.status}`);
 
       const htmlText = await res.text();
@@ -17,26 +17,33 @@ export default class BottomNav extends HTMLElement {
       if (!template) throw new Error('No <template> found');
 
       this.shadowRoot.appendChild(template.content.cloneNode(true));
-      this.highlightCurrentPage();
+      this.updateActiveIcon();
     } catch (err) {
       console.error(err);
     }
   }
 
-  highlightCurrentPage() {
-    const currentPath = window.location.pathname.split('/').pop(); // e.g. "home.html"
+  updateActiveIcon() {
+    const currentPage = window.location.pathname.split('/').pop();
     const links = this.shadowRoot.querySelectorAll('.bottom-nav a');
 
     links.forEach(link => {
-      if (link.getAttribute('href') === currentPath) {
-        link.classList.add('active');
+      const hrefPage = link.getAttribute('href').split('/').pop();
+      const icon = link.querySelector('img');
+      const iconName = link.dataset.icon;
+
+      if (hrefPage === currentPage) {
+        // ✅ Use the filled version
+        icon.src = `/${iconName}-fill.svg`;
       } else {
-        link.classList.remove('active');
+        // 🟩 Use the outline version
+        icon.src = `/${iconName}-outline.svg`;
       }
     });
   }
 }
 
 customElements.define('bottom-nav', BottomNav);
+
 
 

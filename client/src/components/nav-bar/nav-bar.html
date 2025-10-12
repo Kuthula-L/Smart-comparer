@@ -17,8 +17,9 @@
       justify-content: space-around;
       align-items: center;
       padding: 10px 20px;
-      
       width: 300px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 10;
     }
 
     .bottom-nav a {
@@ -26,34 +27,46 @@
       flex-direction: column;
       align-items: center;
       text-decoration: none;
-      color: #223;
+      color: #333;
       font-size: 12px;
+      transition: color 0.2s;
     }
 
+   
     .bottom-nav img {
       width: 24px;
       height: 24px;
       margin-bottom: 4px;
-      filter: grayscale(100%);
+      transition: filter 0.3s, transform 0.2s;
     }
 
-    .bottom-nav a.active img {
-      filter: none;
+    .bottom-thingy{
+      position:fixed;
+      bottom:0px;
+      width:100vw;
+      height:20px;
+      z-index: 8;
     }
+
+  
   </style>
 
   <nav class="bottom-nav">
-    <a href="client/src/pages/HomePage.html" class="active">
-      <img src="./home-angle-svgrepo-com.svg" alt="Home">
-      <span>Home</span>
-    </a>
-    <a href="client/src/pages/BasketPage.html">
-      <img src="./cart-3-svgrepo-com.svg" alt="Basket">
-      <span>Basket</span>
-    </a>
-    <a href="client/src/pages/FavouritesPage.html">
-      <img src="./bag-heart-svgrepo-com.svg" alt="Favorites">
-      <span>Favorites</span>
-    </a>
-  </nav>
+  <a href="HomePage.html" data-icon="home" class="active">
+    <img src="/home-outline.svg" alt="Home">
+    <span>Home</span>
+  </a>
+  <a href="BasketPage.html" data-icon="cart">
+    <img src="/cart-outline.svg" alt="Basket">
+    <span>Basket</span>
+  </a>
+  <a href="FavouritesPage.html" data-icon="heart">
+    <img src="/heart-outline.svg" alt="Favorites">
+    <span>Favorites</span>
+  </a>
+</nav>
+<div class="bottom-thingy">
+
+</div>
 </template>
+
