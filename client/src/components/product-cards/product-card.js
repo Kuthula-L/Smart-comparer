@@ -176,17 +176,21 @@ export default class ProductCard extends HTMLElement {
       })
     );
 
-    // === NEW: send to backend ===
-    const uuid = localStorage.getItem("user_uuid") || "anonymous";
-    postToBackend("addToBasket/", {
-        uuid,
-        product: {
-            Product_name: payload.name,
-            Price: payload.price,
-            Store: payload.store,
-            Image: payload.image,
-        },
-    });
+    // === NEW: send to backend ==
+    (function () {
+        const product = {};
+        if (payload.name) product.Product_name = payload.name;
+        if (payload.price != null) product.Price = payload.price;
+        if (payload.store) product.Store = payload.store;
+          if (payload.image) product.Image = payload.image; // include only if present
+
+        // Do not send uuid if you no longer use UUIDs server-side
+        postToBackend("addToBasket/", { product })
+            .then(() => {
+                  // optional: refresh UI or log
+            })
+            .catch((err) => console.error("addToBasket failed", err));
+    })();
 
     // optional immediate navigation (if navigate-to attribute present)
     const nav = this.getAttribute("navigate-to");
@@ -249,21 +253,32 @@ export default class ProductCard extends HTMLElement {
     );
 
     // === send favourite/unfavourite to backend ===
-    const uuid = localStorage.getItem("user_uuid") || "anonymous";
-    const product = {
-        Product_name: this.getAttribute("name"),
-        Price: Number(this.getAttribute("price")),
-        Store: this.getAttribute("store"),
-        Image: this.getAttribute("image"),
-    };
-    if (this._fav) {
-        postToBackend("addToFavourites/", { uuid, product });
-    } else {
-        postToBackend("removeFromFavourites/", {
-            uuid,
-            product_id: this.getAttribute("name"),
-        });
-    }
+    (function () {
+        const product = {};
+        const name = this.getAttribute("name");
+        const priceRaw = this.getAttribute("price");
+        const price = priceRaw ? Number(priceRaw) : null;
+        if (name) product.Product_name = name;
+        if (price != null && !Number.isNaN(price)) product.Price = price;
+        const store = this.getAttribute("store");
+        if (store) product.Store = store;
+        const image = this.getAttribute("image");
+        if (image) product.Image = image; // include only when present
+
+        if (this._fav) {
+            postToBackend("addToFavourites/", { product })
+                .then(() => {
+                    // optional: update UI
+                })
+                .catch((err) => console.error("addToFavourites failed", err));
+        } else {
+            postToBackend("removeFromFavourites/", { product_id: name })
+                .then(() => {
+                    // optional
+                })
+                .catch((err) => console.error("removeFromFavourites failed", err));
+        }
+    })();
   }
 
   // populate nodes from attributes and apply theme
@@ -393,6 +408,6 @@ export default class ProductCard extends HTMLElement {
 }
 
 // register the element (safe to call multiple times)
-// if (!customElements.get("product-card")) {
-//   customElements.define("product-card", ProductCard);
-// }
+if (!customElements.get("product-card")) {
+  customElements.define("product-card", ProductCard);
+}
