@@ -33,10 +33,10 @@ def search(request):
     with the specified product name and returns up to 50 results.
     """
     res = json.loads(request.body)  # Parse the JSON body from the request
-    checkers = findProducts("Checkers", "Product_name", res['product'], 20)  # Search for products
-    Shoprite = findProducts("PicknPay", "Product_name", res['product'], 20)  # Search for products
-    WoolWorths = findProducts("Shoprite", "Product_name", res['product'], 20)  # Search for products
-    PicknPay = findProducts("WoolWorths", "Product_name", res['product'], 20)  # Search for products
+    checkers = findProducts("Checkers", "Product_name", res['product'], 5)  # Search for products
+    Shoprite = findProducts("PicknPay", "Product_name", res['product'], 5)  # Search for products
+    WoolWorths = findProducts("Shoprite", "Product_name", res['product'], 5)  # Search for products
+    PicknPay = findProducts("WoolWorths", "Product_name", res['product'], 5)  # Search for products
     
     comparedData = get_compared_data(res['product'])
 
@@ -48,7 +48,7 @@ def search(request):
         WoolWorths = [p for p in WoolWorths if isinstance(p, dict) and p.get("Product_name") not in compared_products]
         PicknPay = [p for p in PicknPay if isinstance(p, dict) and p.get("Product_name") not in compared_products]
     data = {"compared_data": comparedData, 
-            "uncomparable_data": {"checkers": checkers, "Shoprite":  Shoprite, "WoolWorths": WoolWorths, "PicknPay":PicknPay}
+            "uncomparable_data": {"Checkers": checkers, "Shoprite":  Shoprite, "WoolWorths": WoolWorths, "PicknPay":PicknPay}
             }
     
     

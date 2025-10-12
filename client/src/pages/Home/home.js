@@ -72,86 +72,214 @@
 //   resultsContainer.innerHTML = results.map(r => `<div>${r.title}</div>`).join("");
 // }
 
+// const searchBar = document.querySelector("search-bar");
+// const value = ""
+// let data = {}
+
+
+// document.addEventListener("keydown", async (event) => {
+//   if (event.key === "Enter") {
+//     console.log("Outside component:", searchBar.value);
+//     try {
+//         // Adjust the path relative to your HTML file or Vite/public setup
+//         // const response = await fetch('http://127.0.0.1:8000/products/search/', {method:"Post"});
+        
+//         const response = await fetch('http://127.0.0.1:8000/products/search/', {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",  // ✅ tell Django you're sending JSON
+//                 },
+//                 body: JSON.stringify({
+//                     product: searchBar.value,  // 👈 example payload — change to your actual key/value
+//                 }),
+//                 });
+//                 if (!response.ok) throw new Error('Network response was not ok');
+
+//                 data = await response.json()
+//                 console.log(data)
+
+//                 addProducts(data)
+//                 // data.push(data1["message"])
+//                 // console.log(data1)
+//                 // const html = await response.text();
+//                 // document.getElementById('app').innerHTML = html;
+//             } catch (error) {
+//                 console.error('Fetch error:', error);
+//             }
+//         }
+
+
+// })
+
+// async function loadPage() {
+//     //   try {
+//     //     // Adjust the path relative to your HTML file or Vite/public setup
+//     //     // const response = await fetch('http://127.0.0.1:8000/products/search/', {method:"Post"});
+        
+//     //     const response = await fetch('http://127.0.0.1:8000/products/search/', {
+//     //             method: "POST",
+//     //             headers: {
+//     //                 "Content-Type": "application/json",  // ✅ tell Django you're sending JSON
+//     //             },
+//     //             body: JSON.stringify({
+//     //                 product: value,  // 👈 example payload — change to your actual key/value
+//     //             }),
+//     //     });
+//     //     if (!response.ok) throw new Error('Network response was not ok');
+
+//     //     const data1 = await response.json()
+
+//     //     data.push(data1["message"])
+//     //     console.log(data1["message"])
+//     //     // const html = await response.text();
+//     //     // document.getElementById('app').innerHTML = html;
+//     //   } catch (error) {
+//     //     console.error('Fetch error:', error);
+//     //   }
+      
+//     }
+// // productCard = document.createElement("product-card")
+
+
+// function addProducts(feed){
+
+//     let comparedEl = [];
+
+//     let comparedList = feed["compared_data"]
+//     let uncomparedList = feed["uncomparable_data"]
+
+//      const picknpay = uncomparedList["PicknPay"] || [];
+//     const checkers = uncomparedList["Checkers"] || [];
+//     const woolworths = uncomparedList["WoolWorths"] || [];
+//     const shoprite = uncomparedList["Shopright"] || [];
+   
+//     let numbers = [picknpay.length,checkers.length, woolworths.length, shoprite.length]
+//     const size = Math.max(...numbers);
+
+   
+
+//     console.log(elements)
+
+//     const container = document.getElementById("product-container");
+
+//     elements = ""
+    
+//     for (let i = 0; i < Object.keys(comparedList).length; i++) {
+//         elements += ProductCard(comparedList[i]["product_name"],comparedList[i]["compared_store"], "", "", "")
+//         comparedEl.push(el)
+        
+//     }
+//     container.innerHTML = elements
+    
+
+
+// }
+
+// async function init() {
+//   await loadPage();   // wait for fetch to finish
+//   addProducts();      // now data is available
+// }
+
+// function ProductCompare(Productname, avgPrice, img ) {
+//     // return `<productCompare title="${Productname}" price="${avgPrice}" image="${img}"></productCompare>`
+//     return `<div styling={width:150px; height: 200px} title="${Productname}" price="${avgPrice}" image="${img}"></div>`
+// }
+// function ProductCard(Productname, store, price , image, logo, dataId ) {
+//      return `<div styling={width:150px; height: 200px}  store="${Productname}" price="${price}" image="${image}" store="${store}"></div>`
+//     // return `<productCompare store="${Productname}" price="${price}" image="${image}" store="${store}"></productCompare>`
+// }
+
+// init()
+
+
 const searchBar = document.querySelector("search-bar");
-const value = ""
-const data = []
+let data = {};
 
-
+// Listen for Enter key
 document.addEventListener("keydown", async (event) => {
   if (event.key === "Enter") {
-    console.log("Outside component:", searchBar.value);
+    // --- Get value from inside search-bar component ---
+    const input = searchBar.shadowRoot.querySelector("input");
+    const query = input.value.trim();
+
+    if (!query) return; // don't search empty
+
+    console.log("Outside component value:", query);
+
     try {
-        // Adjust the path relative to your HTML file or Vite/public setup
-        // const response = await fetch('http://127.0.0.1:8000/products/search/', {method:"Post"});
-        
-        const response = await fetch('http://127.0.0.1:8000/products/search/', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",  // ✅ tell Django you're sending JSON
-                },
-                body: JSON.stringify({
-                    product: searchBar.value,  // 👈 example payload — change to your actual key/value
-                }),
-                });
-                if (!response.ok) throw new Error('Network response was not ok');
+      const response = await fetch("http://127.0.0.1:8000/products/search/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product: query }),
+      });
 
-                const data1 = await response.json()
+      if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-                // data.push(data1["message"])
-                console.log(data1)
-                // const html = await response.text();
-                // document.getElementById('app').innerHTML = html;
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        }
-})
+      data = await response.json();
+      console.log("Response data:", data);
 
-async function loadPage() {
-    //   try {
-    //     // Adjust the path relative to your HTML file or Vite/public setup
-    //     // const response = await fetch('http://127.0.0.1:8000/products/search/', {method:"Post"});
-        
-    //     const response = await fetch('http://127.0.0.1:8000/products/search/', {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",  // ✅ tell Django you're sending JSON
-    //             },
-    //             body: JSON.stringify({
-    //                 product: value,  // 👈 example payload — change to your actual key/value
-    //             }),
-    //     });
-    //     if (!response.ok) throw new Error('Network response was not ok');
-
-    //     const data1 = await response.json()
-
-    //     data.push(data1["message"])
-    //     console.log(data1["message"])
-    //     // const html = await response.text();
-    //     // document.getElementById('app').innerHTML = html;
-    //   } catch (error) {
-    //     console.error('Fetch error:', error);
-    //   }
-      
+      addProducts(data);
+    } catch (error) {
+      console.error("Fetch error:", error);
     }
-// productCard = document.createElement("product-card")
+  }
+});
 
+function addProducts(feed) {
+  if (!feed) return;
 
-function addProducts(){
+  const comparedList = feed["compared_data"] || [];
+  const uncomparedList = feed["uncomparable_data"] || {};
 
-    const container = document.getElementById("product-container");
-    container.innerHTML = ""
-    // container.innerHTML = "<div>tifoom </div>" +"<div>tifoom </div>"
+  const picknpay = uncomparedList["PicknPay"] || [];
+  const checkers = uncomparedList["Checkers"] || [];
+  const woolworths = uncomparedList["WoolWorths"] || [];
+  const shoprite = uncomparedList["Shopright"] || [];
 
+  const numbers = [picknpay.length, checkers.length, woolworths.length, shoprite.length];
+  const size = Math.max(...numbers);
 
-    // productCard.
-    // container.appendChild(productCard)
+  const container = document.getElementById("product-container");
+  container.innerHTML = ""; // clear previous results
 
+  // Add compared items (if exist)
+  if (Array.isArray(comparedList)) {
+    comparedList.forEach((item) => {
+      container.innerHTML += ProductCompare(
+        item["product_name"],
+        item["compared_store"],
+        item["image"] || ""
+      );
+    });
+  }
+
+  // Add uncomparable items
+  for (let i = 0; i < size; i++) {
+    if (picknpay[i]) container.innerHTML += ProductCard(picknpay[i].name, "PicknPay");
+    if (checkers[i]) container.innerHTML += ProductCard(checkers[i].name, "Checkers");
+    if (woolworths[i]) container.innerHTML += ProductCard(woolworths[i].name, "WoolWorths");
+    if (shoprite[i]) container.innerHTML += ProductCard(shoprite[i].name, "Shoprite");
+  }
 }
 
-async function init() {
-  await loadPage();   // wait for fetch to finish
-  addProducts();      // now data is available
+// Helper templates
+function ProductCompare(name, avgPrice, img) {
+  return `
+    <div class="product-compare">
+      <img src="${img}" alt="${name}" width="100" height="100">
+      <h3>${name}</h3>
+      <p>Avg Price: ${avgPrice}</p>
+    </div>
+  `;
 }
 
-init()
+function ProductCard(name, store, price = "", image = "", logo = "", dataId = "") {
+  return `
+    <div class="product-card" data-store="${store}">
+      <h4>${name}</h4>
+      <p>${store}</p>
+    </div>
+  `;
+}
