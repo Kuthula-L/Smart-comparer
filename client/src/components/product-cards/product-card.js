@@ -1,3 +1,18 @@
+// === Backend helper to send data to Django ===
+async function postToBackend(path, payload) {
+    try {
+        const res = await fetch(`http://127.0.0.1:8000/products/${path}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+        return await res.json();
+    } catch (err) {
+        console.error("Backend call failed:", err);
+        return null;
+    }
+}
+
 const STORE_THEMES = {
   woolworths: {
     borderColor: "#111111",
@@ -161,6 +176,18 @@ export default class ProductCard extends HTMLElement {
       })
     );
 
+    // === NEW: send to backend ===
+    const uuid = localStorage.getItem("user_uuid") || "anonymous";
+    postToBackend("addToBasket/", {
+        uuid,
+        product: {
+            Product_name: payload.name,
+            Price: payload.price,
+            Store: payload.store,
+            Image: payload.image,
+        },
+    });
+
     // optional immediate navigation (if navigate-to attribute present)
     const nav = this.getAttribute("navigate-to");
     if (nav) {
@@ -220,6 +247,23 @@ export default class ProductCard extends HTMLElement {
         composed: true,
       })
     );
+
+    // === send favourite/unfavourite to backend ===
+    const uuid = localStorage.getItem("user_uuid") || "anonymous";
+    const product = {
+        Product_name: this.getAttribute("name"),
+        Price: Number(this.getAttribute("price")),
+        Store: this.getAttribute("store"),
+        Image: this.getAttribute("image"),
+    };
+    if (this._fav) {
+        postToBackend("addToFavourites/", { uuid, product });
+    } else {
+        postToBackend("removeFromFavourites/", {
+            uuid,
+            product_id: this.getAttribute("name"),
+        });
+    }
   }
 
   // populate nodes from attributes and apply theme
