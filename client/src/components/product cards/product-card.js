@@ -30,10 +30,8 @@ const STORE_THEMES = {
   },
 };
 
-// Base folder where your SVG logos live. Change this if your static path differs.
 const LOGO_BASE = "./public";
 
-// Explicit mapping from normalized store key -> filename (SVG).
 const STORE_LOGOS = {
   woolworths: "woolworths.svg",
   shoprite: "shoprite.svg",
@@ -48,159 +46,328 @@ function normalizeStoreName(raw) {
 }
 
 // --------------------
-// Default internal template used when page doesn't provide one
-// (contains CSS + structure from your original template)
-const DEFAULT_TEMPLATE_HTML = `
+// Internal default templates (one for add-button, one for sub-button)
+// const DEFAULT_TEMPLATES = {
+//   "add-button-template": `
+//   <style>
+//     /* sizing variable: change --card-width to scale the card */
+//     :host { --card-width: 190px; display:inline-block; }
+
+//     .add-button-component { width: var(--card-width); font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box; }
+
+//     /* card shell */
+//     .box {
+//       background: #fff;
+//       border: 1px solid var(--store-border, #ddd);
+//       border-radius: 12px;
+//       padding: 10px;
+//       box-sizing: border-box;
+//       display: flex;
+//       flex-direction: column;
+//       gap: 8px;
+//       position: relative; /* needed so child absolute elements (logo/add button) can be placed */
+//       overflow: visible;
+//     }
+
+//     /* image area: centered and responsive */
+//     .box2 {
+//       width: 100%;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       padding: 6px 0;
+//       background: var(--image-bg, transparent);
+//       border-radius: 8px;
+//     }
+//     .product-image { width: 72%; aspect-ratio: 1 / 1; display:flex; align-items:center; justify-content:center; }
+//     .product-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+//     /* product info */
+//     .details { padding: 0 4px 8px 4px; display: flex; flex-direction: column; gap: 4px; }
+//     .Product-name { font-weight: 600; font-size: 0.95rem; color: #222; }
+//     .Product-price { font-size: 0.82rem; color: #666; }
+//     .Product-sale-price { font-size: 0.88rem; color: #e63946; font-weight: 600; }
+
+//     /* small badge or right-side box for add button area (not absolute by default) */
+//     .action-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px; }
+
+//     /* add button: place at bottom-right using transform (keeps layout flow but visually on corner) */
+//     .add-button {
+//       width: 56px;
+//       height: 56px;
+//       min-width: 56px;
+//       min-height: 56px;
+//       border-radius: 12px;
+//       border: none;
+//       display: inline-flex;
+//       align-items: center;
+//       justify-content: center;
+//       cursor: pointer;
+//       background: var(--add-btn-bg, #111);
+//       color: #fff;
+//       box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+//     }
+//     .add-button img { width: 28px; height: 28px; object-fit: contain; display:block; }
+
+//     /* heart button - small top-right overlay but non-blocking */
+//     .heart-button {
+//       position: absolute;
+//       right: 8px;
+//       top: 8px;
+//       width: 28px;
+//       height: 28px;
+//       background: transparent;
+//       border: none;
+//       padding: 0;
+//       cursor: pointer;
+//       display: inline-flex;
+//       align-items: center;
+//       justify-content: center;
+//       z-index: 20;
+//     }
+//     .heart-button img { width: 100%; height: 100%; object-fit: contain; display:block; }
+
+//     /* logo: pop-out top-left — small absolute but intentionally minimal */
+//     .logo-box { position: absolute; left: 8px; top: -14px; z-index: 15; pointer-events: none; }
+//     .logo {
+//       width: 56px;
+//       height: 48px;
+//       border-radius: 10px;
+//       background: var(--logo-bg, #fff);
+//       display:flex;
+//       align-items:center;
+//       justify-content:center;
+//       box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+//       overflow:hidden;
+//     }
+//     .logo .logo-img { width: 90%; height: 90%; object-fit: contain; display:block; }
+
+//     /* responsive breakpoint: when container is tiny */
+//     @media (max-width: 320px) {
+//       :host { --card-width: 150px; }
+//       .add-button { width: 48px; height: 48px; }
+//     }
+//   </style>
+
+//   <div class="add-button-component">
+//     <div class="box"></div>
+//     <div class="box2"></div>
+//     <div class="Product-name" src="product-name">Product Name</div>
+//     <div class="Product-price" src="product-price">Price -</div>
+//     <div class="Product-sale-price" src="product-sale-price">Sale -</div>
+//     <div class="box3"></div>
+//     <button class="add-button" aria-label="Add to basket" type="button">
+//       <img src="/public/add-circle-svgrepo-com.svg" alt="add-button" />
+//     </button>
+//     <div class="box5"></div>
+//     <div class="product-image">
+//       <img src="" data-src="product-image.jpg" alt="Product image" class="product-img" />
+//     </div>
+//     <button class="heart-button" aria-label="Add to favourites" type="button">
+//       <img src="/public/whiteHeart.svg" alt="heart" class="heart-img" />
+//     </button>
+//     <div class="logo-box"></div>
+//     <div class="logo" src="logo.png">
+//       <img src="" data-src="logo.png" alt="Logo" class="logo-img" />
+//     </div>
+//   </div>
+//   `,
+
+//   "sub-button-template": `
+//   <style>
+//     /* shared + sub-button specific minimal styles */
+//     .sub-button-component { --store-border: #d18286; --image-bg: pink; --sub-btn-bg: black; --logo-bg: white; --logo-text: #000; position: relative; display: inline-block; overflow: visible; width: 225px; height: 307px; }
+//     .box { width: 225px; height: 307px; background: white; border-style: solid; border-color: var(--store-border); border-radius: 20px; box-sizing: border-box; position: relative; z-index: 0; left: 10px; top: 10px; }
+//     .box2 { position: absolute; width: 205px; height: 195px; left: 20px; top: 20px; border-radius: 10px; background: var(--image-bg); }
+//     .Product-name { position: absolute; left: 15px; top: 225px; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+//     .Product-price { position: absolute; left: 15px; top: 245px; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; font-size: 12px; }
+//     .Product-sale-price { position: absolute; left: 15px; top: 265px; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; font-size: 12px; }
+//     .box3 { position: absolute; width: 90px; height: 75px; background: white; left: 135px; top: 235px; border-style: solid; border-color: var(--store-border); border-radius: 20px; border-bottom-color: white; border-right-color: white; border-bottom-left-radius: 5px; border-top-right-radius: 5px; box-sizing: border-box; }
+//     .sub-button { position: absolute; left: 150px; top: 245px; width: 70px; height: 70px; font-size: 36px; background: var(--sub-btn-bg); border-bottom-right-radius: 30px; border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-left-radius: 5px; color: white; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; }
+//     .sub-button img { width: 36px; height: 36px; display: block; object-fit: contain; }
+//     .box5 { position: absolute; width: 35px; height: 35px; top: 20px; left: 15px; border-bottom-right-radius: 35px; background: white; }
+//     .product-image { width: 95px; height: 95px; position: absolute; left: 73px; top: 75px; }
+//     .product-image .product-img { max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
+//     .heart-button { position: absolute; background: none; border: none; cursor: pointer; padding: 0; width: 25px; height: 25px; top: 55px; left: 170px; }
+//     .heart-button img { width: 100%; height: 100%; display: block; object-fit: contain; }
+//     .logo-box { position: absolute; width: 55px; height: 55px; top: 10px; left: 15px; border-bottom-right-radius: 60px; background: white; }
+//     .logo { position: absolute; top: 0px; width: 60px; height: 60px; border-bottom-right-radius: 60px; background: var(--logo-bg); color: var(--logo-text); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+//     .logo .logo-img { max-width: 100%; max-height: 100%; display: block; object-fit: contain; }
+//   </style>
+
+//   <div class="sub-button-component">
+//     <div class="box"></div>
+//     <div class="box2"></div>
+//     <div class="Product-name" src="product-name">Product Name</div>
+//     <div class="Product-price" src="product-price">Price -</div>
+//     <div class="Product-sale-price" src="product-sale-price">Sale -</div>
+//     <div class="box3"></div>
+//     <button class="sub-button" aria-label="Remove from basket" type="button">
+//       <img src="/public/minus-circle-svgrepo-com.svg" alt="sub-button" />
+//     </button>
+//     <div class="box5"></div>
+//     <div class="product-image">
+//       <img src="" data-src="product-image.jpg" alt="Product image" class="product-img" />
+//     </div>
+//     <button class="heart-button" aria-label="Add to favourites" type="button">
+//       <img src="/public/heart-angle-svgrepo-com.svg" alt="heart" class="heart-img" />
+//     </button>
+//     <div class="logo-box"></div>
+//     <div class="logo" src="logo.png">
+//       <img src="" data-src="logo.png" alt="Logo" class="logo-img" />
+//     </div>
+//   </div>
+//   `,
+// };
+
+const DEFAULT_TEMPLATES = {
+  "add-button-template": `
   <style>
-    /* Theme variables  */
+    /* component root */
     .add-button-component {
-      --store-border: #d18286; /* default border */
-      --image-bg: pink; /* default image background */
-      --add-btn-bg: black; /* default add button color */
-      --logo-bg: white; /* default logo background */
-      --logo-text: #000; /* default logo text color */
-      position: relative;
-      display: inline-block;
+      --store-border: #d18286;
+      --image-bg: #f3f3f4;
+      --add-btn-bg: #000;
+      --logo-bg: #fff;
+      --logo-text: #000;
+      box-sizing: border-box;
+      width: 160px;
+      height: 245px;
+      position: relative; /* needed so absolute children (logo, buttons) position correctly */
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow: visible;
+      margin-left:100px;
     }
 
-    /* Root container  */
-    .add-button-component {
-      position: relative;
-      width: 225px;
-      height: 307px;
-    }
-
-    /* CSS Design */
+    /* card base */
     .box {
-      position: relative;
-      z-index: 0;
-      left: 10px;
-      top: 10px;
-      width: 225px;
-      height: 307px;
+      
+      width: 100%;
+      height: 100%;
       background: white;
-      border-style: solid;
-      border-color: var(--store-border);
+      border: 1px solid var(--store-border);
       border-radius: 20px;
       box-sizing: border-box;
+      padding: 5px;           /* use padding instead of absolute positions */
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
     }
+
+    /* image area (kept in flow) */
     .box2 {
-      position: absolute;
-      width: 205px;
+      width: 100%;
       height: 195px;
-      left: 20px;
-      top: 20px;
       border-radius: 10px;
       background: var(--image-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
+
+    .product-image {
+      width: 95px;
+      height: 95px;
+      display: block;
+      /* centered by parent */
+    }
+    .product-image .product-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* text area (flow under image) */
     .Product-name {
-      position: absolute;
-      left: 15px;
-      top: 225px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin-top: 8px;
+      font-weight: 600;
+      color: #222;
+      font-size: 16px;
     }
-    .Product-price {
-      position: absolute;
-      left: 15px;
-      top: 245px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    .Product-price, .Product-sale-price {
+      margin-top: 6px;
       font-size: 12px;
+      color: #666;
     }
-    .Product-sale-price {
-      position: absolute;
-      left: 15px;
-      top: 265px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      font-size: 12px;
-    }
+    .Product-sale-price { color: #e63946; }
+
+    /* right box (small price/add container) - kept in flow, placed with margin-left auto */
     .box3 {
       position: absolute;
-      width: 95px;
-      height: 85px;
+      width: 65px;
+      height: 60px;
       background: white;
-      left: 135px;
-      top: 228px;
-      border-style: solid;
-      border-color: var(--store-border);
-      border-radius: 20px;
-      border-bottom-color: white;
-      border-right-color: white;
-      border-bottom-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top: 1px solid var(--store-border);
+      border-left: 1px solid var(--store-border);
+      border-radius: 5px;
+      align-self: flex-end;
+     
+      right:0px;
+      bottom:0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-sizing: border-box;
     }
+
+    /* add button: absolute so it can overlap card corner */
     .add-button {
       position: absolute;
-      left: 154px;
-      top: 240px;
-      width: 70px;
-      height: 70px;
-      font-size: 36px;
-      background: var(--add-btn-bg);
-      border-bottom-right-radius: 30px;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
-      border-bottom-left-radius: 5px;
-      color: white;
+      right: 1px;     /* relative to .add-button-component */
+      bottom: 1px;
+      width: 55px;
+      height: 55px;
       border: none;
+      border-radius:50px;
+      border-bottom-left-radius:10px;
+      background: var(--add-btn-bg);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       padding: 0;
+      z-index: 20;
+    }
+    .add-button img { width: 36px; height: 36px; object-fit: contain; display: block; }
+
+    /* heart (favorite) button: absolute top-right */
+    .heart-button {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      z-index: 25;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .box5 {
-      position: absolute;
-      width: 35px;
-      height: 35px;
-      top: 20px;
-      left: 15px;
-      border-bottom-right-radius: 35px;
-      background: white;
-    }
-    .product-image {
-      width: 95px;
-      height: 95px;
-      position: absolute;
-      left: 73px;
-      top: 75px;
-    }
-    .product-image .product-img {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-    }
-    .heart-button {
-      position: absolute;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      width: 25px;
-      height: 25px;
-      top: 55px;
-      left: 170px;
-    }
-    .heart-button img {
-      width: 100%;
-      height: 100%;
-      border-color: white;
-      display: block;
-    }
+    .heart-button img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+    /* logo container: absolute top-left and pops out */
     .logo-box {
       position: absolute;
-      top: 16px;             /* tweak as needed */
-      left: 15px;
+      top: -10px;
+      left: -10px;
       width: 65px;
       height: 60px;
-      border-bottom-right-radius: 60px;
-      background: white;
-      z-index: 10;
-      
+      background: transparent;
+      z-index: 30;
+      overflow: visible;
+      pointer-events: none; /* decorative */
     }
     .logo {
       position: absolute;
-      top: 0px;             /* align inside the logo-box if you want */
+      top: -10px;
+      left: -10px;
       width: 70px;
       height: 65px;
       border-bottom-right-radius: 60px;
@@ -211,48 +378,112 @@ const DEFAULT_TEMPLATE_HTML = `
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      z-index: 12;
-      
+      transform: translateY(-6px);
+      z-index: 31;
     }
-      .add-button img {
-        width: 36px;        /* choose the icon size you want */
-        height: 36px;
-        display: block;
-        object-fit: contain;
-      }
-    .logo .logo-img {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-      object-fit: contain;
-    }
+    .logo .logo-img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+
   </style>
 
   <div class="add-button-component">
-    <div class="box"></div>
-    <div class="box2"></div>
-    <div class="Product-name" src="product-name">Product Name</div>
-    <div class="Product-price" src="product-price">Price -</div>
-    <div class="Product-sale-price" src="product-sale-price">Sale -</div>
-    <div class="box3"></div>
+    <div class="box">
+      <div class="box2">
+        <div class="product-image"><img class="product-img" src="" data-src="product-image.jpg" alt="Product image"></div>
+      </div>
+
+      <div class="Product-name" src="product-name">Product Name</div>
+      <div class="Product-price" src="product-price">Price -</div>
+      <div class="Product-sale-price" src="product-sale-price">Sale -</div>
+
+      <div style="flex:1"></div> <!-- pushes box3 / footer upwards if needed -->
+
+      <div class="box3"></div>
+    </div>
+
     <button class="add-button" aria-label="Add to basket" type="button">
       <img src="./public/add-circle-svgrepo-com.svg" alt="add-button" />
     </button>
-    <div class="box5"></div>
-    <div class="product-image">
-      <img src="" data-src="product-image.jpg" alt="Product image" class="product-img" />
-    </div>
+
     <button class="heart-button" aria-label="Add to favourites" type="button">
-      <img src="./public/heart-angle-svgrepo-com.svg" alt="heart" class="heart-img" />
+      <img src="./public/whiteHeart.svg" alt="heart" />
     </button>
+
     <div class="logo-box"></div>
     <div class="logo" src="logo.png">
       <img src="" data-src="logo.png" alt="Logo" class="logo-img" />
     </div>
   </div>
-`;
+  `,
 
-// Cache for generated fallback templates (so we don't recreate identical templates per instance)
+  "sub-button-template": `
+  <style>
+    .sub-button-component {
+      --store-border: #d18286;
+      --image-bg: #f3f3f4;
+      --sub-btn-bg: #000;
+      --logo-bg: #fff;
+      --logo-text: #000;
+      box-sizing: border-box;
+      width: 225px;
+      height: 307px;
+      position: relative;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      overflow: visible;
+    }
+
+    .box { width:100%; height:100%; background:white; border:1px solid var(--store-border); border-radius:20px; padding:14px; box-sizing:border-box; display:flex; flex-direction:column; }
+    .box2 { width:100%; height:195px; border-radius:10px; background:var(--image-bg); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .product-image { width:95px; height:95px; }
+    .product-image .product-img { width:100%; height:100%; object-fit:contain; }
+
+    .Product-name { margin-top:8px; font-weight:600; }
+    .Product-price, .Product-sale-price { margin-top:6px; font-size:12px; }
+    .Product-sale-price { color:#e63946; }
+
+    .box3 { width:90px; height:75px; align-self:flex-end; margin-top:6px; border-radius:12px; border:1px solid var(--store-border); display:flex; align-items:center; justify-content:center; box-sizing:border-box; background:white; }
+
+    .sub-button { position: absolute; right: 14px; bottom: 14px; width:70px; height:70px; border:none; border-radius:12px; background:var(--sub-btn-bg); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:20; }
+    .sub-button img { width:36px; height:36px; object-fit:contain; display:block; }
+
+    .heart-button { position:absolute; top:10px; right:12px; width:28px; height:28px; border:none; background:transparent; padding:0; cursor:pointer; z-index:25; display:flex; align-items:center; justify-content:center; }
+    .heart-button img { width:100%; height:100%; object-fit:contain; display:block; }
+
+    .logo-box { position:absolute; top:8px; left:8px; width:55px; height:55px; z-index:10; overflow:visible; pointer-events:none; }
+    .logo { position:absolute; top:-8px; left:12px; width:60px; height:60px; border-bottom-right-radius:60px; background:var(--logo-bg); display:flex; align-items:center; justify-content:center; box-shadow:0 10px 18px rgba(0,0,0,0.12); transform:translateY(-6px); z-index:30; overflow:hidden;}
+    .logo .logo-img { width:100%; height:100%; object-fit:contain; display:block; }
+  </style>
+
+  <div class="sub-button-component">
+    <div class="box">
+      <div class="box2">
+        <div class="product-image"><img class="product-img" src="" data-src="product-image.jpg" alt="Product image"></div>
+      </div>
+
+      <div class="Product-name" src="product-name">Product Name</div>
+      <div class="Product-price" src="product-price">Price -</div>
+      <div class="Product-sale-price" src="product-sale-price">Sale -</div>
+
+      <div style="flex:1"></div>
+      <div class="box3"></div>
+    </div>
+
+    <button class="sub-button" aria-label="Remove from basket" type="button">
+      <img src="./public/minus-circle-svgrepo-com.svg" alt="sub-button">
+    </button>
+
+    <button class="heart-button" aria-label="Add to favourites" type="button">
+      <img src="./public/heart-angle-svgrepo-com.svg" alt="heart">
+    </button>
+
+    <div class="logo-box"></div>
+    <div class="logo" src="logo.png">
+      <img src="" data-src="logo.png" alt="Logo" class="logo-img" />
+    </div>
+  </div>
+  `,
+};
+
+// Cache for generated fallback templates per templateId
 const _cachedDefaultTemplates = {};
 
 // --------------------
@@ -291,12 +522,15 @@ export default class ProductCard extends HTMLElement {
     // Try to find a template in the document first
     let tpl = document.getElementById(templateId);
 
-    // If not found, use or create a cached default template
+    // If not found, use or create a cached default template for that templateId
     if (!tpl) {
       if (!_cachedDefaultTemplates[templateId]) {
         const created = document.createElement("template");
         created.id = `__product_card_default_${templateId}`;
-        created.innerHTML = DEFAULT_TEMPLATE_HTML;
+        // fallback to add-button-template if an unknown templateId is requested
+        created.innerHTML =
+          DEFAULT_TEMPLATES[templateId] ||
+          DEFAULT_TEMPLATES["add-button-template"];
         _cachedDefaultTemplates[templateId] = created;
       }
       tpl = _cachedDefaultTemplates[templateId];
@@ -391,7 +625,6 @@ export default class ProductCard extends HTMLElement {
     if (this.$heartButton)
       this.$heartButton.setAttribute("aria-pressed", String(this._fav));
 
-    // If there's no <img> inside the template just emit event and return
     if (!this.$heartImg) {
       this.dispatchEvent(
         new CustomEvent("toggle-fav", {
@@ -403,7 +636,6 @@ export default class ProductCard extends HTMLElement {
       return;
     }
 
-    // Use a single path shape and toggle fill vs outline so silhouette stays same
     const heartPath =
       "M12 21s-7.5-4.9-9.6-8.1C-0.2 8.7 4 4 7.8 6.1 9.7 7 12 9 12 9s2.3-2 4.2-2.9C20 4 24.2 8.7 21.6 12.9 19.5 16.1 12 21 12 21z";
 
@@ -448,7 +680,6 @@ export default class ProductCard extends HTMLElement {
     if (this.$productName)
       this.$productName.textContent = name || "Product Name";
 
-    // keep "Price - " label present
     if (this.$price)
       this.$price.textContent =
         price !== null && !Number.isNaN(price)
@@ -468,7 +699,7 @@ export default class ProductCard extends HTMLElement {
     }
 
     if (this.$logo) {
-      this.$logo.innerHTML = ""; // clear
+      this.$logo.innerHTML = "";
       if (logoSrc) {
         const img = document.createElement("img");
         img.src = logoSrc;
@@ -515,6 +746,7 @@ export default class ProductCard extends HTMLElement {
       this.$imageBg.style.background = theme.imageBg;
     }
     if (this.$addButton && theme.addBtn) {
+      // works for add-button or sub-button (they use the same style prop name)
       this.$addButton.style.background = theme.addBtn;
     }
     if (this.$logo) {
@@ -545,6 +777,6 @@ export default class ProductCard extends HTMLElement {
 }
 
 // register the element (safe to call multiple times)
-// if (!customElements.get("product-card")) {
-//   customElements.define("product-card", ProductCard);
-// }
+if (!customElements.get("product-card")) {
+  customElements.define("product-card", ProductCard);
+}
