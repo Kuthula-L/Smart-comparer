@@ -80,6 +80,43 @@ def getBasket(request):
     data = getPage_Data("Basket", res["uuid"])  # Fetch basket data for user
     return JsonResponse(data)  # Return basket data as JSON
 
+@csrf_exempt
+def addToBasket(request):
+    """
+    Expects POST JSON: { "uuid": "<user-uuid>", "product": { ... product fields ... } }
+    Inserts product into Supabase table 'Basket' and returns inserted row.
+    """
+    try:
+        payload = json.loads(request.body)
+        uuid = payload.get("uuid")
+        product = payload.get("product")
+        if not uuid or not product:
+            return JsonResponse({"error": "uuid and product required"}, status=400)
+        # add user uuid to product record
+        product_record = {**product, "uuid": uuid}
+        res = supabase.table("Basket").insert(product_record).execute()
+        return JsonResponse({"status": "ok", "data": res.data}, status=201)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@csrf_exempt
+def removeFromBasket(request):
+    """
+    Expects POST JSON: { "uuid": "<user-uuid>", "product_id": "<id or unique field>" }
+    Deletes matching record from 'Basket' table.
+    """
+    try:
+        payload = json.loads(request.body)
+        uuid = payload.get("uuid")
+        product_id = payload.get("product_id")
+        if not uuid or not product_id:
+            return JsonResponse({"error": "uuid and product_id required"}, status=400)
+        # adjust to the exact column name that identifies the product (e.g. "id" or "Product_name")
+        res = supabase.table("Basket").delete().eq("uuid", uuid).eq("Product_name", product_id).execute()
+        return JsonResponse({"status": "ok", "data": res.data})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
 # -------------------------------
 # Get Grocery List Endpoint
 # -------------------------------
@@ -109,3 +146,37 @@ def getFavourites(request):
     res = json.loads(request.body)  # Parse JSON body
     data = getPage_Data("Favourites", res["uuid"])  # Fetch user's favorites
     return JsonResponse(data)  # Return favorites as JSON
+
+@csrf_exempt
+def addToFavourites(request):
+    """
+    Expects POST JSON: { "uuid": "<user-uuid>", "product": {...} }
+    Inserts into 'Favourites' table.
+    """
+    try:
+        payload = json.loads(request.body)
+        uuid = payload.get("uuid")
+        product = payload.get("product")
+        if not uuid or not product:
+            return JsonResponse({"error": "uuid and product required"}, status=400)
+        product_record = {**product, "uuid": uuid}
+        res = supabase.table("Favourites").insert(product_record).execute()
+        return JsonResponse({"status": "ok", "data": res.data}, status=201)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@csrf_exempt
+def removeFromFavourites(request):
+    """
+    Expects POST JSON: { "uuid": "<user-uuid>", "product_id": "<id or unique field>" }
+    """
+    try:
+        payload = json.loads(request.body)
+        uuid = payload.get("uuid")
+        product_id = payload.get("product_id")
+        if not uuid or not product_id:
+            return JsonResponse({"error": "uuid and product_id required"}, status=400)
+        res = supabase.table("Favourites").delete().eq("uuid", uuid).eq("Product_name", product_id).execute()
+        return JsonResponse({"status": "ok", "data": res.data})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
