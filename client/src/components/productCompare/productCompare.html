@@ -7,148 +7,152 @@
   <body>
     <template id="CompareProductComponent">
       <style>
-        /* Campare button */
-        .CompareButton {
-          position: absolute;
-          background-color: hwb(46 1% 1%);
-          color: black;
-          border: 1px solid #dfd5ae;
-          height: 45px;
-          width: 109px;
+        /* Product card container */
+        .product-card {
+          width: 160px;
+          height: 245px;
+          background: white;
+          border: 1px solid #f2ec9b;
           border-radius: 10px;
-          border-bottom-left-radius: 30px;
-          border-top-left-radius: 20px;
-          cursor: pointer;
-          font-family: Arial, Helvetica, sans-serif;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          /*justify-content: space-between;*/
+          padding: 10px;
+          box-sizing: border-box;
+          position: relative; /* needed only for the compare button overlay */
         }
-        /* container for the image */
+
+        /* Image container */
         .image-container {
-          position: absolute;
-          width: 190px;
-          margin-left: 7px;
-          margin-top: 7px;
-          height: 195px;
+          width: 100%;
+          height: 180px;
           background-color: #f6f3ce;
           border-radius: 10px;
-        }
-        /* This is for heart icon for favourites */
-        .favourites {
-          position: absolute;
-          top: 12px;
-          right: 15px;
-          font-size: 37px;
-          color: #ffffff; /* first color white*/
-          width: 25px;
-          height: 30px;
+          overflow: hidden;
           display: flex;
           justify-content: center;
           align-items: center;
-          cursor: pointer;
+          position: relative; /* needed for heart icon */
         }
-        .favourites.active {
-          color: hwb(46 1% 1%);
-        }
-        .product-card {
-          width: 205px;
-          height: 300px;
-          background: white;
-          border-color: #f2ec9b;
-          border-style: solid;
-          border-radius: 10px; /*rounded corners*/
-        }
-        .title {
-          position: absolute;
-          left: 15px;
-          top: 225px;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-          font-size: 12px;
-          font-weight: bold;
-        }
-        /* This is for "AVG. Price" lavel */
-        .avgprice {
-          position: absolute;
-          left: 15px;
-          top: 245px;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-          font-size: 12px;
-        }
-        .price {
-          position: absolute;
-          left: 15px;
-          top: 265px;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-          font-size: 12px;
-          font-weight: bold;
-        }
-        .product-card img {
-          width: 100%;
-          height: 180px;
+
+        .image-container img {
+          width: 70%;
+          height: 70%;
           object-fit: cover;
+          border-radius: 10px;
         }
-        .containerCurve {
+
+        /* Heart (favourite) icon */
+        .favourites {
           position: absolute;
-          width: 45px;
-          height: 35px;
-          top: 20px;
-          left: 15px;
-          border-bottom-right-radius: 35px;
+          top: 10px;
+          right: 10px;
+          cursor: pointer;
+          width: 30px;
+          height: 30px;
+        }
+
+        .favourites img {
+          width: 100%;
+          height: 100%;
+        }
+
+        .favourites.active img {
+          filter: invert(77%) sepia(55%) saturate(671%) hue-rotate(12deg)
+            brightness(97%) contrast(93%);
+        }
+
+        /* Text info */
+        .product-info {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .title {
+          font-size: 12px;
+          font-weight: bold;
+        }
+
+        .avgprice {
+          font-size: 12px;
+          color: #444;
+        }
+
+        .price {
+          font-size: 12px;
+          font-weight: bold;
+        }
+
+        /* The compare button area — only absolute container */
+        .compare-container {
+          position: absolute;
+          bottom: 0px;
+          right: 0px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .CompareButton {
+          background-color: hwb(46 1% 1%);
+          color: black;
+          border: 1px solid #dfd5ae;
+          height: 40px;
+          width: 80px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 13px;
+          font-family: Arial, Helvetica, sans-serif;
+          z-index: 10;
+        }
+
+        /* Optional curved box background */
+        .box {
+          position: absolute;
+          bottom: -1px;
+          right: -1px;
+          width: 90px;
+          height: 50px;
+          /* border: 1px solid #f2ec9b;*/
+          border-left: 1px solid #f2ec9b ;
+          border-top: 1px solid #f2ec9b ;
+
+          border-top-left-radius: 20px;
           background: white;
+          z-index: 3;
         }
       </style>
+
       <div class="product-card">
         <div class="image-container">
-          <img src="download.png" alt="product not found" />
+          <img src="/download.png" alt="product not found" />
           <div class="favourites" id="heart">
-            <img
-              src="whiteHeart.svg"
-              style="
-                position: absolute;
-                width: 35px;
-                height: 35px;
-                margin-top: 0px;
-                margin-left: 2px;
-              "
-              alt="Favourites"
-            />
-            <div class="favourites.active"></div>
+            <img src="/whiteHeart.svg" alt="Favourites" />
           </div>
         </div>
+
         <div class="product-info">
-          <!-- Product text details -->
           <div class="title">Product-</div>
-          <div class="avgprice">AVG.Price</div>
-          <div class="price"></div>
+          <div class="avgprice">AVG. Price</div>
+          <div class="price">R00.00</div>
         </div>
+
+        <!-- Absolute compare button -->
+        <div class="compare-container">
+          <!-- <a href="#"> -->
+            <button class="CompareButton">Compare</button>
+          <!-- </a> -->
+        </div>
+
+        <div class="box"></div>
       </div>
-      <div>
-        <!-- put a link that a compare button is going to be directed to  -->
-        <a href="">
-          <button
-            class="CompareButton"
-            style="position: absolute; left: 110px; top: 270px; z-index: 3"
-          >
-            Compare
-          </button>
-        </a>
-      </div>
-      <div
-        class="box"
-        style="
-          position: absolute;
-          top: 259px;
-          left: 103px;
-          width: 110px;
-          height: 50px;
-          border-style: solid;
-          border-color: #f2ec9b;
-          border-top-left-radius: 20px;
-          border-bottom-color: white;
-          border-right-color: white;
-          background: white;
-          z-index: 1;
-        "
-      ></div>
     </template>
+
     <script type="module" src="./productCompare.js"></script>
   </body>
 </html>

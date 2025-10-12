@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,14 +6,14 @@
     <title>Document</title>
     <link rel="stylesheet" href="/src/components/header/header.css">
 </head>
-<body>
-    <template>
-        <div class="Header">
+<body> -->
+    <!-- <template class="Header">
+        <div >
             <div class="smartCompareLogo">
                 <img
                 src="Smart_Comparer_Logo-removebg.png"
                 style="
-                width: 150x;
+                width: 150px;
                 height: 150px;
                 border-radius: 50%;
                 border: none;
@@ -40,7 +40,7 @@
             Smart Comparer
         </div>
         <div class="logoutIcon">
-            <!-- Put a link that is going to direct a this log out icon to -->
+       
             <nav>
                 <a href="HomePage.html"></a>
                 <a href="HomePage.html">
@@ -61,7 +61,69 @@
     </div>
 </div>
 </div>
+</template> -->
+<!-- <script type="module" src="/header.js"></script> -->
+<!-- </body>
+</html> -->
+
+
+<!-- flex-direction: row; -->
+<!-- justify-content: space-between; -->
+<template id="HeaderComponent">
+  <div
+    style="
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 50px;
+      position: relative;
+    padding:10px;
+    "
+  >
+  <!-- position: absolute; -->
+    <!-- Logo & Text -->
+    <div style="display: flex; flex-direction: row; align-items: center;">
+      <img
+        src='/Smart_Comparer_Logo-removebg.png'
+        alt='Logo not found'
+        style='
+          width: 90px;
+          border-radius: 50%;
+          border: none;
+          z-index: 1;
+        '
+      />
+      <!-- margin-top: -90px; -->
+      <!-- margin-left: 15px; -->
+      <div
+        style='
+          font-size: 24px;
+          width:auto;
+          color: black;
+          font-family: "Josefin Slab", serif;
+          z-index: 3;
+          margin-left:20px;
+        '
+      >
+        Smart Comparer
+      </div>
+    </div>
+
+    <!-- Logout Icon -->
+    <div style='position: relative; margin-right: 60px;'>
+        <a href='HomePage.html'>
+            <img
+            src='/logout-svgrepo-com.svg'
+            alt='Logout'
+            style='
+            width: 35px;
+            border-radius: 40%;
+            top: 10px;
+            right: 0;
+            cursor: pointer;
+          '
+        />
+      </a>
+    </div>
+  </div>
 </template>
-<script type="module" src="./header.js"></script>
-</body>
-</html>
