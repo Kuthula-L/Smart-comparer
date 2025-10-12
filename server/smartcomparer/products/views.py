@@ -4,12 +4,11 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from pydantic import Json
 import json
-
-from server.smartcomparer.Scraper.scraper.store_data import PicknPay, Shoprite, WoolWorths
 from .utils import findProducts, get_compared_data
 from .utils import getPage_Data
 from .utils import supabase
 from .utils import search_products_fuzzy
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -26,6 +25,7 @@ def startServer(request):
 # -------------------------------
 # Search Endpoint
 # -------------------------------
+@csrf_exempt
 def search(request):
     """
     Receives a POST request with a JSON body containing a 'product' key.
@@ -33,10 +33,10 @@ def search(request):
     with the specified product name and returns up to 50 results.
     """
     res = json.loads(request.body)  # Parse the JSON body from the request
-    checkers = findProducts("Cheackers", "Product_name", res['product'], 20)  # Search for products
-    Shoprite = findProducts("Cheackers", "Product_name", res['product'], 20)  # Search for products
-    WoolWorths = findProducts("Cheackers", "Product_name", res['product'], 20)  # Search for products
-    PicknPay = findProducts("Cheackers", "Product_name", res['product'], 20)  # Search for products
+    checkers = findProducts("Checkers", "Product_name", res['product'], 20)  # Search for products
+    Shoprite = findProducts("PicknPay", "Product_name", res['product'], 20)  # Search for products
+    WoolWorths = findProducts("Shoprite", "Product_name", res['product'], 20)  # Search for products
+    PicknPay = findProducts("WoolWorths", "Product_name", res['product'], 20)  # Search for products
     
     comparedData = get_compared_data(res['product'])
 

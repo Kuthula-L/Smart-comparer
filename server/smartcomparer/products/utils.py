@@ -19,7 +19,6 @@ def findProducts(table_name, column, value, limit):
 def getPage_Data(table_name, uuid):
     response = supabase.table(table_name) \
     .select("*") \
-    .eq("uuid", uuid)\
     .limit(50) \
     .execute()
     return response.data

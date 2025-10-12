@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favourites Page</title>
+
+
+    <dashboard-header></dashboard-header>
+    <search-bar></search-bar>
+    <empty-state type="favorites"></empty-state>
+    <bottom-nav></bottom-nav>
+    <script type="module" src="../../main.js"></script>
+    <script
+      type="module"
+      src="/src/components/search-bar/search-bar.js"
+    ></script>
+    <script type="module" src="/src/components/nav-bar/nav-bar.js"></script>
+    <script>
+      document
+        .querySelector("search-bar")
+        .addEventListener("search-changed", (e) => {
+          console.log("Search value:", e.detail);
+        });
+    </script>
+    <!-- <script type="module" src="./exmaple.js"></script> -->
+  </body>
+</html>

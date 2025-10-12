@@ -1,9 +1,9 @@
-const templateURL = new URL('./filter.html', import.meta.url).href;
+const filterTemplateURL = new URL('./filter.html', import.meta.url).href;
 
-async function loadTemplate() {
-  if (document.getElementById('filter-template')) return;
+async function loadFilterTemplate() {
+  if (document.getElementById('filter-popup-template')) return;
 
-  const res = await fetch(templateURL);
+  const res = await fetch(filterTemplateURL);
   const html = await res.text();
 
   const container = document.createElement('div');
@@ -13,12 +13,12 @@ async function loadTemplate() {
   document.body.appendChild(template);
 }
 
-await loadTemplate();
+await loadFilterTemplate();
 
-class Filter extends HTMLElement {
+class FilterPopup extends HTMLElement {
   constructor() {
     super();
-    const template = document.getElementById('filter-template');
+    const template = document.getElementById('filter-popup-template');
     const shadow = this.attachShadow({ mode: 'open' });
     shadow.appendChild(template.content.cloneNode(true));
 
@@ -33,9 +33,9 @@ class Filter extends HTMLElement {
     });
 
     this.confirmBtn.addEventListener('click', () => {
-      const selected = [...this.shadowRoot.querySelectorAll('input[name="filter"]:checked')]
+      const selectedShops = [...this.shadowRoot.querySelectorAll('input[name="filter"]:checked')]
         .map(input => input.value);
-      console.log('Selected filter:', selected);
+      console.log('Selected shops:', selectedShops);
       this.popup.classList.remove('show');
     });
 
@@ -47,4 +47,5 @@ class Filter extends HTMLElement {
   }
 }
 
-customElements.define('filter-popup', Filter);
+customElements.define('filter-popup', FilterPopup);
+

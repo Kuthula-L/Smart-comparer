@@ -27,12 +27,15 @@ SECRET_KEY = 'django-insecure-ivmwrud8d_$y%3l__+dkd0aho0-ysu64oea-yz7$y$xt=upe5$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '127.0.0.1',       # allow fetch from localhost IP
+    'localhost',       # allow fetch from localhost domain
+]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,12 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'rest_framework',
-    'accounts',
+    # 'accounts',
 
     
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,6 +109,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Vite frontend
+    "http://127.0.0.1:5173",
+    "http://localhost:5174",  # Vite frontend
+    "http://127.0.0.1:5174",
 ]
 
 
