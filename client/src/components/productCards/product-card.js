@@ -42,7 +42,11 @@ export default class ProductCard extends HTMLElement {
         const htmlText = await res.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlText, "text/html");
+<<<<<<< HEAD
         cachedTemplate = doc.querySelector("template#add-button-template");
+=======
+        cachedTemplate = doc.querySelector("template");
+>>>>>>> 830695d80af375611715fd524ec36818b480226f
 
         if (!cachedTemplate) {
           console.error('No <template> found with id="add-button-template"');

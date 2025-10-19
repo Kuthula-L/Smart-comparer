@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>basket Page</title>
+
+    <div style="width: 100%; height: 25vh; position:fixed; top:0; background-color:white; z-index:20">
+      <dashboard-header></dashboard-header>
+      <search-bar></search-bar>
+      <!-- <sort-popup style="position: fixed; top:150px; left: 100px" ></sort-popup>
+      <filter-popup style="position: fixed; top:150px"></filter-popup> -->
+    </div>
+    <!-- <div class="result"></div> -->
+    <div style="width: 100%; height: 25vh; background-color:white;" ></div>
+    <div id="product-container" style="display:grid; grid-template-columns: repeat(2, 160px); gap: 16px; width:100%;justify-content: center; z-index:0">
+        
+        <!-- <product-compare title="bread" price="R20" image=""> </product-compare> -->
+        
+    </div>
+    <div style="margin-top: -80px;" id="mt">
+        <empty-state type="favorite" style="margin-top: -100px;"></empty-state>
+
+    </div>
+    <div style="background-color: black; position:absolute; bottom: 60px; width:100%; height: 600px; z-index:20; display:none"></div>
+
+    
+    <!-- <product-card
+    store="Pick n Pay"
+    data-id="p-001"
+    name="Snack pack"
+    price="R15.00"
+    image="images/snack.png"
+    logo-src=""
+    template-id = "add-button-template"
+    
+    ></product-card> 
+     -->
+    <bottom-nav></bottom-nav>
+    <script>
+      document
+        .querySelector("search-bar")
+        .addEventListener("search-changed", (e) => {
+          console.log("Search value:", e.detail);
+        });
+    </script>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/components/search-bar/search-bar.js"></script>
+    <script type="module" src="/src/components/sort/sort-popup.js"></script>
+    <script type="module" src="/src/components/filter/filter.js"></script>
+    <script type="module" src="/src/components/nav-bar/nav-bar.js"></script>
+    <script type="module" src="/src/components/productCompare/productCompare.js"></script>
+    <script type="module" src="/src/components/product cards/product-card.js"></script>
+    <script type="module" src="/src/components/basket-total/basket-total.js"></script>
+    <script type="module" src="/src/components/empty-state/empty-state.js"></script>
+    <script type="module" src="./Favourites.js"></script>
+  </body>
+</html>
