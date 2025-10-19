@@ -589,6 +589,6 @@ export default class ProductCard extends HTMLElement {
 }
 
 // register the element (safe to call multiple times)
-if (!customElements.get("product-card")) {
-  customElements.define("product-card", ProductCard);
-}
+// if (!customElements.get("product-card")) {
+//   customElements.define("product-card", ProductCard);
+// }

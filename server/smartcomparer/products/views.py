@@ -123,17 +123,17 @@ def getBasket(request):
     # res = json.loads(request.body)  # Parse JSON body
     # data = getPage_Data("Basket", res["uuid"])  # Fetch basket data for user
     # return JsonResponse(data)  # Return basket data as JSON
-    try:
-        payload = json.loads(request.body or "{}")
-        uuid = payload.get("uuid")
-        if _is_valid_uuid(uuid):
-            data = getPage_Data("Basket", str(uuid))
-        else:
+    # try:
+        # payload = json.loads(request.body or "{}")
+        # uuid = payload.get("uuid")
+        # if _is_valid_uuid(uuid):
+        #     data = getPage_Data("Basket", str(uuid))
+        # else:
             # if no valid uuid provided, return all basket rows (or you can filter differently)
-            data = getPage_Data("Basket", None)
-        return JsonResponse(data, safe=False)
-    except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+    data = getPage_Data("Basket", "")
+    return JsonResponse(data, safe=False)
+    # except Exception as e:
+    #     return JsonResponse({"error": str(e)}, status=500)
 
 @csrf_exempt
 def addToBasket(request):

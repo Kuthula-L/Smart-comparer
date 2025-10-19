@@ -42,5 +42,29 @@
     </div>
 
     <script src="auth.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("login-form");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const email = document.getElementById("login-email").value.trim();
+                const password = document.getElementById("login-password").value.trim();
+
+                const users = JSON.parse(localStorage.getItem("users") || "[]");
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    alert("Welcome back!");
+                    localStorage.setItem("loggedInUser", JSON.stringify(user));
+                    // redirect to Home Page (same path as your signup redirect)
+                    window.location.href = "/src/pages/Home/HomePage.html";
+                } else {
+                    alert("Invalid email or password. Please try again.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
