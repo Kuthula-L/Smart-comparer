@@ -8,7 +8,7 @@ export default function BasketPerStore() {
 
    <h2>Basket totals per store</h2>
  
-      <div className="box" style="width: 100px; height: 100px"></div>
+      <div className="box"></div>
   
     {/* <!-- shoprite component --> */}
     <div id="Checkers" className="store-baket" role="group">

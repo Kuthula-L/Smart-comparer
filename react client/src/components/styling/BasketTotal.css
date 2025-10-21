@@ -1,0 +1,32 @@
+.basket-total-container {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding: 12px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  text-align: center;
+}
+
+.basket-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.basket-pill {
+  background: #808080;
+  border-radius: 25px;
+  padding: 6px 16px;
+}
+
+.basket-amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}

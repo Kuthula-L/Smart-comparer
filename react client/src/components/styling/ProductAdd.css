@@ -1,0 +1,141 @@
+.product-card-container {
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+}
+
+.product-card-box {
+  width: 170px;
+  height: 245px;
+  background: white;
+  border: 3px solid; /* Color will be set via style */
+  border-radius: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.product-image-box {
+  width: 100%;
+  height: 70%;
+  
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.product-image-box img {
+  width: 70%;
+  height: 70%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.favourites {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.favourites img {
+  width: 100%;
+  height: 100%;
+}
+
+.favourites.active img {
+  filter: invert(77%) sepia(55%) saturate(671%) hue-rotate(12deg)
+    brightness(97%) contrast(93%);
+}
+
+.add-button-background-box {
+  width: 75px;
+  height: 60px;
+  background-color: white;
+  border: 3px solid; /* Color will be set via style */
+  border-top-left-radius: 15px;
+  border-bottom-color: white;
+  border-right: white;
+  left: 92px;
+  top: 180px;
+  position: absolute;
+  z-index: 5;
+}
+
+.add-button-inner-background-box {
+  width: 50px;
+  height: 50px;
+  /* background-color will be set via style */
+  top: 10px;
+  right: 5px;
+  position: absolute;
+  border-radius: 25px;
+  border-bottom-left-radius: 5px;
+  color: white;
+  font-size: 25px; 
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+}
+
+.background-box-white {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  border-bottom-right-radius: 40px;
+}
+
+.store-logo-background {
+  width: 50px;
+  height: 50px;
+  /* background-color will be set via style */
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  border-bottom-right-radius: 40px;
+  border-top-left-radius: 15px;
+  z-index: 10;
+}
+
+.store-logo-background img {
+  width: 30px;
+  height: 40px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.product-info {
+  position: absolute;
+  bottom: 45px;
+  z-index: 5;
+  left: 10px;
+  right: 10px;
+}
+
+.Product-Name {
+  font-size: 9px;
+  font-weight: bold;
+}
+
+.Product-Price {
+  font-size: 10px;
+  font-weight: bold;
+}
