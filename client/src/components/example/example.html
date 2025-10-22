@@ -6,9 +6,20 @@
     <title>block</title>
 </head>
 <body>
-    <template id="box-template">
-        <div class="box" style="width: 100px; height:100px"></div>
+    <template style="position: relative; width:100px; height:100px" id="box-template">
+        <div class="blackBox" style="background-color: black; position:absolute; width: 20px; height:20px; top:50px; right:10px" ></div>
+        <div class="box" style="width: 100px; height:100px; border-radius:50px"></div>
     </template>
+
+    <!-- <div> -->
+        <!-- border-radius:50px; -->
+        <!-- button -->
+        <!-- <div style="background-color: black; position:absolute;z-index: 5; "> 
+            <button></button>
+        </div> -->
+        <!-- white background -->
+        <!-- <div style="border-top:1px solid red; border-left:1px solid red ;position:absolute; bottom:0px; right:0; background-color: white; z-index: 2"></div> -->
+    <!-- </div> -->
     <script type="module" src="./exmaple.js"></script>
 </body>
 </html>

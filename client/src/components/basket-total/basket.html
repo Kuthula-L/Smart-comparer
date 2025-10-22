@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Basket Total Component</title>
+    <link rel="stylesheet" href="basket.css" />
+    <script defer src="basket.js"></script>
+  </head>
+  <body>
+    <template id="basket-total-template">
+      <!-- Basket Total component (fixed via .basket-total-wrap) -->
+      <div
+        class="basket-total-wrap"
+        aria-live="polite"
+        aria-atomic="true"
+        style="
+          position: fixed;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: 100px;
+          z-index: 1000;
+          display: inline-block;
+          pointer-events: auto;
+          padding: 8px;
+        "
+      >
+        <div
+          class="basket-total-box"
+          style="
+            position: relative;
+            background: white;
+            width: 172px;
+            height: 66px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+          "
+        >
+          <p
+            class="Basket-Total"
+            style="
+              position: relative;
+              color: black;
+              text-align: center;
+              margin: 0;
+              bottom: 15px;
+            "
+          >
+            Basket Total
+          </p>
+        </div>
+        <div
+          class="basket-total-amount"
+          style="
+            position: absolute;
+            background: white;
+            width: 145px;
+            border: 1px solid grey;
+            height: 35px;
+            left: 20px;
+            top: 38px;
+            border-radius: 20px;
+          "
+        ></div>
+        <div
+          class="basket-total-price"
+          style="
+            position: absolute;
+            background: rgb(179, 179, 179);
+            width: 65px;
+            height: 30px;
+            left: 25px;
+            top: 41px;
+            border-radius: 20px;
+          "
+        >
+          <span id="basket-price">0</span>
+        </div>
+        <div
+          class="basket-total-sale-price"
+          style="
+            position: absolute;
+            background: rgb(216, 49, 49);
+            width: 65px;
+            height: 30px;
+            left: 98px;
+            top: 41px;
+            border-radius: 20px;
+          "
+        >
+          <span id="basket-sale-price">0</span>
+        </div>
+      </div>
+    </template>
+  </body>
+</html>

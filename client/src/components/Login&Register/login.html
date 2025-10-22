@@ -10,8 +10,12 @@
     <div class="auth-container">
         <div class="auth-card">
             <!-- Logo and Header -->
+<<<<<<< HEAD
             <img class="logo" src="/smart-compare-1.svg" alt="Smart Comparer Logo">
 
+=======
+            <img class="logo" src="/Smart-Comparer-Logo.png"> <alt="Smart Comparer Logo">
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7
             <h1 class="auth-subtitle">Smart Comparer</h1>
             <p class="app-description">We compare prices across trusted stores</p>
             
@@ -28,7 +32,11 @@
             </div>
             
             <!-- Login Form -->
+<<<<<<< HEAD
             <form id="login-form" class="auth-form">
+=======
+            <form id="login-form" class="auth-form" action="../../pages/HomePage.html">
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7
                 <input type="email" placeholder="Enter Email" class="form-input" required>
                 <input type="password" placeholder="Enter Password" class="form-input" required>
                 <button type="submit" class="btn-primary">Login</button>
@@ -43,5 +51,34 @@
     </div>
 
     <script src="auth.js"></script>
+<<<<<<< HEAD
 </body>
 </html>
+=======
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("login-form");
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const email = document.getElementById("login-email").value.trim();
+                const password = document.getElementById("login-password").value.trim();
+
+                const users = JSON.parse(localStorage.getItem("users") || "[]");
+                const user = users.find(u => u.email === email && u.password === password);
+
+                if (user) {
+                    alert("Welcome back!");
+                    localStorage.setItem("loggedInUser", JSON.stringify(user));
+                    // redirect to Home Page (same path as your signup redirect)
+                    window.location.href = "/src/pages/Home/HomePage.html";
+                } else {
+                    alert("Invalid email or password. Please try again.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7

@@ -1,0 +1,80 @@
+/* basket.css */
+
+/* place the basket total fixed near bottom-center; adjust vars to change position */
+.basket-total-wrap {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+/* container box (kept your original width/height) */
+.basket-total-box {
+  position: relative;
+  background: white;
+  width: 172px;
+  height: 66px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* the larger area showing item count or summary */
+.basket-total-amount {
+  position: absolute;
+  background: white;
+  width: 145px;
+  border: 1px solid grey;
+  height: 35px;
+  left: 20px;
+  top: 38px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* original price pill (left) */
+.basket-total-price {
+  position: absolute;
+  background: rgb(179, 179, 179);
+  width: 65px;
+  height: 30px;
+  left: 25px;
+  top: 41px;
+  border-radius: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color: #111;
+}
+
+/* sale price pill (right) */
+.basket-total-sale-price {
+  position: absolute;
+  background: rgb(216, 49, 49);
+  width: 65px;
+  height: 30px;
+  left: 98px;
+  top: 41px;
+  border-radius: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  color: white;
+}
+
+/* mobile tweak */
+@media (max-width: 420px) {
+  .basket-total-wrap { bottom: 12px; left: 50%; transform: translateX(-50%); }
+  .basket-total-box { width: 150px; height: 60px; }
+  .basket-total-amount { width: 125px; left: 15px; top: 34px; }
+  .basket-total-price, .basket-total-sale-price { width: 56px; height: 28px; top: 37px; }
+}

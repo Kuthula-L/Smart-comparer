@@ -48,3 +48,4 @@ class SortPopup extends HTMLElement {
 }
 
 customElements.define('sort-popup', SortPopup);
+

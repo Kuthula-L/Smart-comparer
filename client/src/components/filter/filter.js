@@ -18,33 +18,60 @@ await loadFilterTemplate();
 class FilterPopup extends HTMLElement {
   constructor() {
     super();
-    const template = document.getElementById('filter-popup-template');
-    const shadow = this.attachShadow({ mode: 'open' });
-    shadow.appendChild(template.content.cloneNode(true));
-
-    this.filterBtn = shadow.querySelector('.filter-btn');
-    this.popup = shadow.querySelector('.popup');
-    this.confirmBtn = shadow.querySelector('.confirm-btn');
+    this.attachShadow({ mode: 'open' });
+    this.color = color; // modify this
+    this.size = size; // modify this
+  }
+  static get observedAttributes() {
+    return ['color', 'size']; // modify this
   }
 
-  connectedCallback() {
-    this.filterBtn.addEventListener('click', () => {
-      this.popup.classList.toggle('show');
-    });
+  // Step 2: called whenever observed attributes modify
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'color') {// modify this
+      this.color = newValue;
+    }
+    if (name === 'size') { // modify this
+      this.size = newValue;
+    }
+    
+    this.render(); // update element whenever attributes modify
+  }
 
-    this.confirmBtn.addEventListener('click', () => {
-      const selectedShops = [...this.shadowRoot.querySelectorAll('input[name="filter"]:checked')]
-        .map(input => input.value);
-      console.log('Selected shops:', selectedShops);
-      this.popup.classList.remove('show');
-    });
 
-    document.addEventListener('click', (e) => {
-      if (!this.contains(e.target)) {
-        this.popup.classList.remove('show');
+  async connectedCallback() {
+    // load template (wrapped in try/catch to avoid unhandled rejections)
+    try {
+      const res = await fetch('./src/components/filter/filter.html');//modify this
+      if (!res.ok) {
+        console.error('Failed to fetch template:', res.status, res.statusText);
+        return;
       }
-    });
-  }
+      const htmlText = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      const template = doc.querySelector('template');
+      if (!template) {
+        console.error('No <template> found in example.html');
+        return;
+      }
+      this.shadowRoot.appendChild(template.content.cloneNode(true));
+
+      // Optionally style it
+      const div = this.shadowRoot.querySelector('.box');//modify this
+      
+      if (!div) { 
+        console.error('No element with class .box found inside template');
+        return;
+      }
+      div.style.width = this.size; // modify from here
+      div.style.height = this.size;
+      div.style.backgroundColor = this.color;
+    } catch (err) {
+      console.error('Error loading box template:', err);
+    }
 }
 
-customElements.define('filter-popup', FilterPopup);
+
+}
+

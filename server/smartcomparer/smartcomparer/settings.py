@@ -11,10 +11,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+SECRET_KEY = config("SECRET_KEY")
+DATABASE_URL = config("URL")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -25,21 +27,30 @@ SECRET_KEY = 'django-insecure-ivmwrud8d_$y%3l__+dkd0aho0-ysu64oea-yz7$y$xt=upe5$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    '127.0.0.1',       # allow fetch from localhost IP
+    'localhost',       # allow fetch from localhost domain
+]
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'rest_framework',
+    # 'accounts',
+
+    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,7 +78,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'smartcomparer.wsgi.application'
-
+GOOGLE_CLIENT_ID = 'your-client-id'
+GOOGLE_CLIENT_SECRET = 'your-client-secret'
+GOOGLE_REDIRECT_URI = 'http://localhost:8000/api/auth/google/callback/'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -96,6 +109,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Vite frontend
+    "http://127.0.0.1:5173",
+    "http://localhost:5174",  # Vite frontend
+    "http://127.0.0.1:5174",
 ]
 
 

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favourites Page</title>
+  </head>
+  <body>
+    <dashboard-header></dashboard-header>
+    <search-bar></search-bar>
+    <empty-state type="favorites"></empty-state>
+    <!-- container for favourites -->
+    <div id="favourites-content" class="page-content" style="padding: 0 16px; margin-top: 12px;">
+        <div id="fav-items" class="items-grid"></div>
+    </div>
+    <bottom-nav></bottom-nav>
+    <script type="module" src="../../main.js"></script>
+    <script
+      type="module"
+      src="/src/components/search-bar/search-bar.js"
+    ></script>
+    <script type="module" src="/src/components/nav-bar/nav-bar.js"></script>
+    <script>
+      document
+        .querySelector("search-bar")
+        .addEventListener("search-changed", (e) => {
+          console.log("Search value:", e.detail);
+        });
+    </script>
+    <!-- <script type="module" src="./exmaple.js"></script> -->
+    <script>
+        (function () {
+            const API_BASE = "http://127.0.0.1:8000/products/"; // backend base
+            const uuid = localStorage.getItem("user_uuid") || "anonymous";
+
+            async function postToBackend(path, payload) {
+                try {
+                    const res = await fetch(API_BASE + path, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                    });
+                    return await res.json();
+                } catch (err) {
+                    console.error("API error:", err);
+                    return null;
+                }
+            }
+
+            function normalizeListResponse(resp) {
+                if (!resp) return [];
+                if (Array.isArray(resp)) return resp;
+                if (Array.isArray(resp.data)) return resp.data;
+                if (Array.isArray(resp.products)) return resp.products;
+                for (const k in resp) {
+                    if (Array.isArray(resp[k])) return resp[k];
+                }
+                return [];
+            }
+
+            function renderFavourites(items) {
+                const container = document.getElementById("fav-items");
+                container.innerHTML = "";
+
+                if (!items || items.length === 0) {
+                    const p = document.createElement("p");
+                    p.textContent = "No favourites yet ❤️";
+                    p.style.padding = "12px 0";
+                    container.appendChild(p);
+                    return;
+                }
+
+                items.forEach((it) => {
+                    const name = it.Product_name || it.name || it.ProductName || "";
+                    const price = it.Price ?? it.price ?? 0;
+                    const img = it.Image || it.image || "";
+
+                    const card = document.createElement("div");
+                    card.className = "fav-item";
+                    card.style.display = "flex";
+                    card.style.alignItems = "center";
+                    card.style.gap = "12px";
+                    card.style.padding = "10px 0";
+                    card.style.borderBottom = "1px solid rgba(0,0,0,0.06)";
+
+                    card.innerHTML = `
+              <div style="width:64px; height:64px; flex:0 0 64px;">
+                <img src="${img || ''}" alt="${name}" style="max-width:64px; max-height:64px; object-fit:cover;" />
+              </div>
+              <div style="flex:1;">
+                <div class="fav-item-name" style="font-weight:600;">${name}</div>
+                <div class="fav-item-meta" style="color:#666; font-size:0.95rem;">${price !== null ? 'R' + Number(price).toFixed(2) : ''}</div>
+              </div>
+              <div style="flex: 0 0 auto;">
+                <button class="btn-remove-fav" data-product="${name}" style="background:#ef4444; color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;">
+                  Remove
+                </button>
+              </div>
+            `;
+
+                    const removeBtn = card.querySelector(".btn-remove-fav");
+                    removeBtn.addEventListener("click", () => {
+                        removeFromFavourites(name);
+                    });
+
+                    container.appendChild(card);
+                });
+            }
+
+            // Load favourites from backend
+            async function loadFavourites() {
+                // NOTE: the route in your project is spelled 'Favourits/' in urls.py
+                const resp = await postToBackend("Favourits/", { uuid });
+                const items = normalizeListResponse(resp);
+                renderFavourites(items);
+            }
+
+            async function removeFromFavourites(product_id) {
+                try {
+                    await postToBackend("removeFromFavourites/", { uuid, product_id });
+                } catch (err) {
+                    console.error("Remove favourite failed", err);
+                } finally {
+                    loadFavourites();
+                }
+            }
+
+            // Listen for product-level favourite toggles (so clicking heart elsewhere persists)
+            function onToggleFavEvent(e) {
+                const detail = e.detail || {};
+                const fav = detail.fav;
+                const id = detail.id || detail.productId || detail.product_id || "";
+                // attempt to build product payload
+                const product = {
+                    Product_name: id,
+                    Price: detail.price || detail.Price || 0,
+                    Store: detail.store || "",
+                    Image: detail.image || "",
+                };
+                if (fav) {
+                    postToBackend("addToFavourites/", { uuid, product }).then(loadFavourites);
+                } else {
+                    postToBackend("removeFromFavourites/", { uuid, product_id: id }).then(loadFavourites);
+                }
+            }
+
+            window.addEventListener("DOMContentLoaded", () => {
+                loadFavourites();
+                document.addEventListener("toggle-fav", onToggleFavEvent);
+                console.log("Favourites page integration initialized (uuid:", uuid, ")");
+            });
+        })();
+    </script>
+  </body>
+</html>

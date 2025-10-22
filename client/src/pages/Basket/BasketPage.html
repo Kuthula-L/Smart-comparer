@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basket Page</title>
+    
+  </head>
+  <body>
+    <header-dashboard></header-dashboard>
+    <search-bar></search-bar>
+    <empty-state type="basket"></empty-state>
+    <!-- container where basket items will be rendered -->
+    <div id="basket-content" class="page-content" style="padding: 0 16px; margin-top: 12px;">
+        <div id="basket-items" class="items-grid"></div>
+    </div>
+    <bottom-nav></bottom-nav>
+    <script
+      type="module"
+      src="/src/components/search-bar/search-bar.js"
+    ></script>
+    <script type="module" src="/src/components/nav-bar/nav-bar.js"></script>
+    <script>
+      document
+        .querySelector("search-bar")
+        .addEventListener("search-changed", (e) => {
+          console.log("Search value:", e.detail);
+        });
+    </script>
+    <script type="module" src="/src/main.js"></script>
+    <!-- Basket integration -->
+    <script>
+        (function () {
+            const API_BASE = "http://127.0.0.1:8000/products/"; // backend base
+            const uuid = localStorage.getItem("user_uuid") || "anonymous";
+
+            async function postToBackend(path, payload) {
+                try {
+                    const res = await fetch(API_BASE + path, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                    });
+                    return await res.json();
+                } catch (err) {
+                    console.error("API error:", err);
+                    return null;
+                }
+            }
+
+            // backend shape helper (support multiple response shapes)
+            function normalizeListResponse(resp) {
+                if (!resp) return [];
+                if (Array.isArray(resp)) return resp;
+                if (Array.isArray(resp.data)) return resp.data;
+                if (Array.isArray(resp.products)) return resp.products;
+                // fallback: try to find first array inside object
+                for (const k in resp) {
+                    if (Array.isArray(resp[k])) return resp[k];
+                }
+                return [];
+            }
+
+            // Render helpers - keep markup simple so existing CSS can style it
+            function renderBasket(items) {
+                const container = document.getElementById("basket-items");
+                container.innerHTML = "";
+
+                if (!items || items.length === 0) {
+                    // Let your empty-state component show, but also show a small message
+                    const p = document.createElement("p");
+                    p.textContent = "Your basket is empty 🧺";
+                    p.style.padding = "12px 0";
+                    container.appendChild(p);
+                    return;
+                }
+
+                // Create item cards (team CSS will likely style .basket-item)
+                items.forEach((it) => {
+                    // safe-field names - backend may use different keys; try common variants
+                    const name = it.Product_name || it.name || it.product_name || it.Name || "";
+                    const price = it.Price ?? it.price ?? it.Price_per_unit ?? 0;
+                    const img = it.Image || it.image || "";
+
+                    const card = document.createElement("div");
+                    card.className = "basket-item";
+                    card.style.display = "flex";
+                    card.style.alignItems = "center";
+                    card.style.gap = "12px";
+                    card.style.padding = "10px 0";
+                    card.style.borderBottom = "1px solid rgba(0,0,0,0.06)";
+
+                    card.innerHTML = `
+              <div style="width:64px; height:64px; flex: 0 0 64px;">
+                <img src="${img || ''}" alt="${name}" style="max-width:64px; max-height:64px; object-fit:cover;" />
+              </div>
+              <div style="flex:1;">
+                <div class="basket-item-name" style="font-weight:600;">${name}</div>
+                <div class="basket-item-meta" style="color: #666; font-size:0.95rem;">${price !== null ? 'R' + Number(price).toFixed(2) : ''}</div>
+              </div>
+              <div style="flex: 0 0 auto;">
+                <button class="btn-remove" data-product="${name}" style="background:#ef4444; color:#fff; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;">
+                  Remove
+                </button>
+              </div>
+            `;
+
+                    // wire remove button
+                    const removeBtn = card.querySelector(".btn-remove");
+                    removeBtn.addEventListener("click", () => {
+                        removeFromBasket(name); // using name as identifier - change if you have unique id
+                    });
+
+                    container.appendChild(card);
+                });
+            }
+
+            // Load basket from backend
+            async function loadBasket() {
+                // backend route that already exists in your project: 'basket/'
+                const resp = await postToBackend("basket/", { uuid });
+                const items = normalizeListResponse(resp);
+                renderBasket(items);
+            }
+
+            // Remove item (calls backend)
+            async function removeFromBasket(product_id) {
+                try {
+                    await postToBackend("removeFromBasket/", { uuid, product_id });
+                } catch (err) {
+                    console.error("Remove failed", err);
+                } finally {
+                    loadBasket();
+                }
+            }
+
+            // Listen for add-to-basket custom events dispatched by product cards
+            function onAddToBasketEvent(e) {
+                const detail = e.detail || {};
+                const product = {
+                    Product_name: detail.name || detail.Product_name || detail.title || "",
+                    Price: detail.price ?? detail.Price ?? 0,
+                    Store: detail.store || "",
+                    Image: detail.image || "",
+                };
+                // send to server, but don't block UI
+                postToBackend("addToBasket/", { uuid, product }).then(() => {
+                    // optional: refresh list so user sees new item
+                    loadBasket();
+                });
+            }
+
+            // wire everything when DOM is ready
+            window.addEventListener("DOMContentLoaded", () => {
+                // initial load
+                loadBasket();
+
+                // global listener for product-card add events (so adding from catalog persists)
+                document.addEventListener("add-to-basket", onAddToBasketEvent);
+
+                console.log("Basket page integration initialized (uuid:", uuid, ")");
+            });
+        })();
+    </script>
+  </body>
+</html>

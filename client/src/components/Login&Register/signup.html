@@ -28,12 +28,22 @@
             </div>
             
             <!-- Signup Form -->
+<<<<<<< HEAD
             <form id="signup-form" class="auth-form">
                 <input type="email" placeholder="Enter Email" class="form-input" required>
                 <input type="password" placeholder="Enter Password" class="form-input" required>
                 <input type="password" placeholder="Confirm Password" class="form-input" required>
                 <button type="submit" class="btn-primary">Create Account</button>
             </form>
+=======
+           <form id="signup-form" class="auth-form">
+                <input id="signup-email" type="email" placeholder="Enter Email" class="form-input" required>
+                <input id="signup-password" type="password" placeholder="Enter Password" class="form-input" required>
+                <input id="signup-confirm" type="password" placeholder="Confirm Password" class="form-input" required>
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7
             
             <!-- Auth Switch -->
             <div class="auth-switch">
@@ -42,7 +52,54 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
     <script src="auth.js"></script>
 </body>
 </html>
+=======
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("signup-form");
+            if (!form) return;
+
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+
+                const email = document.getElementById("signup-email").value.trim();
+                const password = document.getElementById("signup-password").value;
+                const confirm = document.getElementById("signup-confirm").value;
+
+                if (!email || !password) {
+                    alert("Please enter email and password.");
+                    return;
+                }
+                if (password !== confirm) {
+                    alert("Passwords do not match.");
+                    return;
+                }
+
+                const users = JSON.parse(localStorage.getItem("users") || "[]");
+                if (users.find(u => u.email === email)) {
+                    alert("An account with this email already exists. Try logging in.");
+                    return;
+                }
+
+                const newUser = { email, password };
+                users.push(newUser);
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("loggedInUser", JSON.stringify(newUser));
+
+                alert("Account created successfully! Redirecting to Home Page...");
+
+                // redirect to HomePage.html
+                window.location.href = "/src/pages/Home/HomePage.html";
+            });
+        });
+    </script>
+
+    <script src="auth.js"></script>
+    
+</body>
+</html>
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7

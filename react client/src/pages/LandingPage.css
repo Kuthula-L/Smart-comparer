@@ -1,0 +1,135 @@
+.Page {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.Logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.Logo img {
+  width: 60px;  /* Specific size for logo */
+  height: 60px;
+}
+
+.BubbleIcons {
+  position: absolute;
+  top:295px;
+  right: 65px;
+}
+
+.BubbleIcons img {
+  width: 250px;  /* Specific size for bubble icons */
+  height: 250px;
+}
+
+.CopyRight {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+ 
+}
+
+.CopyRight img {
+  width: px;  /* Specific size for copyright */
+  height: 50px;
+}
+
+.ManStanding {
+  position: absolute;
+  top:15px;
+  right: -70px;
+  transform: translateX(-50%);
+ 
+}
+
+.ManStanding img {
+  width: 160px;  /* Specific size for man standing */
+  height: 300px;
+}
+
+.Shopicons {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+ 
+}
+
+.Shopicons img {
+  width: 300px;  /* Specific size for shop icons */
+  height: 210px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.italic-text {
+  font-style: italic;
+}
+
+.landing-page-compare-button {
+  position: absolute;
+  left: 10px;
+  top: 235px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  background: linear-gradient(90deg, #E5A000, #F6B000);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  text-decoration: none;
+}
+
+.landing-page-compare-button:focus {
+  outline: 3px solid rgba(0,0,0,0.12);
+}
+
+.landing-footer {
+  background-color: white;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  top: 869px;
+}
+
+.quote{
+    
+    position:absolute;
+    bottom:260px;
+    left:55px;
+}
+
+.quote-2{
+    position:absolute;
+    bottom:500px;
+    left:55px;
+}
+.quote-1{
+
+    position:absolute;
+    left:25px;
+    top:110px;
+}
