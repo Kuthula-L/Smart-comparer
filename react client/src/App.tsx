@@ -1,9 +1,17 @@
 import './App.css'
 import ProductCompare from './components/ProductCompare'
 import SearchBar from './components/SearchBar'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import EmptyState from "./components/EmptyState";
+import NavBar from "./components/NavBar";
+import SearchBar from "./components/SearchBar";
+import Basket from "./pages/Basket";
+import Favourites from "./pages/Favorites";
+import HomePage from "./pages/Home";
 {/*import LandingPage from './pages/LandingPage';
 import ProductAddCard from './components/ProductAddCard'
 import BasketTotal from './components/BasketTotal'*/}
+
 
 function App() {
 
@@ -11,6 +19,7 @@ function App() {
     <>
     <SearchBar></SearchBar>
     <ProductCompare></ProductCompare>
+      
    
       {/*<ProductAddCard 
         productName="Generic Product"
