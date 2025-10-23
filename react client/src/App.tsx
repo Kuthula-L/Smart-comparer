@@ -1,6 +1,6 @@
 import './App.css'
-import ProductCompare from './components/ProductCompare'
 import SearchBar from './components/SearchBar'
+import BasketPerStore from './components/BasketPerStore'
 
 function App() {
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
     <SearchBar></SearchBar>
-    <ProductCompare></ProductCompare>
+    <BasketPerStore storeName={'Shoprite'} TotalAmount={100}></BasketPerStore>
     </>
   )
 }

@@ -67,6 +67,7 @@
         .title {
           font-size: 12px;
           font-weight: bold;
+          
         }
 
         .avgprice {
@@ -82,8 +83,8 @@
         /* The compare button area — only absolute container */
         .compare-container {
           position: absolute;
-          bottom: 0px;
-          right: 0px;
+          bottom: -2px;
+          left: 215px;
           display: flex;
           align-items: center;
           justify-content: center;
