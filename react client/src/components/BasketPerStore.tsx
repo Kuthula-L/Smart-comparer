@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 // import "./styling/BasketPerStore.css";
 // import StoreBadge from "./storeBadge"
 /**
- * Props for a single store badge.
- * - storeName: display name and tooltip
+ * - storeName: display name 
  * - color: background color for the badge
  * - logoText: short text shown in the circular logo area
- * - initialAmount: starting amount for the badge
  * Main container that renders multiple store badges.
  * Add or remove <StoreBadge /> entries as needed.
  */
