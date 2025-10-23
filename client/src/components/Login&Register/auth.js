@@ -86,4 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (googleLoginBtn) googleLoginBtn.addEventListener('click', handleGoogleAuth);
     if (googleSignupBtn) googleSignupBtn.addEventListener('click', handleGoogleAuth);
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> ef891e11a7eb52bf618c35721f4ebc7d364aded7
