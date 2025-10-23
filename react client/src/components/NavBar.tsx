@@ -22,10 +22,7 @@ const NavBar: React.FC = () => {
       <nav className="nav-bar">
         {navItems.map((item) => {
           const isActive = location.pathname.includes(item.href);
-          const iconSrc = isActive
-            ? `/${item.icon}-fill.svg`
-            : `/${item.icon}-outline.svg`;
-
+          const iconSrc = isActive ? `/${item.icon}-fill.svg` : `/${item.icon}-outline.svg`;
           return (
             <Link
               key={item.href}

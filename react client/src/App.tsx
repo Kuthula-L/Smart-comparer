@@ -1,60 +1,11 @@
 import './App.css'
-import ProductCompare from './components/ProductCompare'
-import SearchBar from './components/SearchBar'
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import EmptyState from "./components/EmptyState";
-import NavBar from "./components/NavBar";
-import SearchBar from "./components/SearchBar";
-import Basket from "./pages/Basket";
-import Favourites from "./pages/Favorites";
-import HomePage from "./pages/Home";
-{/*import LandingPage from './pages/LandingPage';
-import ProductAddCard from './components/ProductAddCard'
-import BasketTotal from './components/BasketTotal'*/}
-
+import DashboardHome from './pages/DashboardHome'
 
 function App() {
 
   return (
     <>
-    <SearchBar></SearchBar>
-    <ProductCompare></ProductCompare>
-      
-   
-      {/*<ProductAddCard 
-        productName="Generic Product"
-        productPrice="15.00"
-      />
-
-
-      <ProductAddCard 
-        productName="Organic Bread"
-        productPrice="25.99"
-        store="Woolworths"
-      />
-
-
-      <ProductAddCard 
-        productName="Fresh Milk"
-        productPrice="22.50"
-        store="Checkers"
-      />
-
-
-      <ProductAddCard 
-        productName="White Bread"
-        productPrice="18.99"
-        store="Pick N Pay"
-      />
-
-
-      <ProductAddCard 
-        productName="Brown Bread"
-        productPrice="16.75"
-        store="Shoprite"
-      />
-      <LandingPage />
-      <BasketTotal />*/}
+      <DashboardHome></DashboardHome>
     </>
     
   )
