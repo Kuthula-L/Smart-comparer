@@ -29,7 +29,7 @@ function SearchBar ({GetHomeData}:Probs) {
 
   const [query, setQuery] = useState<string>("");
   const [results, setResults] = useState<Product[]>([]);
-  const [homeData, setHome] = useState<Product[]>([]);
+  // const [homeData, setHome] = useState<Product[]>([]);
 
 
   async function fetchitems(){ 
@@ -37,7 +37,8 @@ function SearchBar ({GetHomeData}:Probs) {
         }, body: JSON.stringify({"product":query})})
 
         const data = await res.json()
-        setHome(data);
+        // setHome(data);
+        GetHomeData(data)
 
     }
 
@@ -70,10 +71,10 @@ function SearchBar ({GetHomeData}:Probs) {
     }
   }
 
-  useEffect(()=>{
+  // useEffect(()=>{
 
-    GetHomeData(homeData)
-  },[query])
+  //   GetHomeData(homeData)
+  // },[query])
 
 
   // useImperativeHandle(ref, () => ({
@@ -83,8 +84,8 @@ function SearchBar ({GetHomeData}:Probs) {
   // }));
 
   return (
-    <div className="search-bar">
-      <div className="input-container">
+    <div style={{}} className="search-bar">
+      <div style={{display:"flex"}} className="input-container">
         <span className="search-icon">
           <img src="/search-svgrepo-com.svg" alt="Search" />
         </span>
@@ -104,14 +105,14 @@ function SearchBar ({GetHomeData}:Probs) {
         )}
       </div>
 
-      <div className="results-container" style={{ marginTop: "15px" }}>
+      <div className="results-container" style={{ marginTop: "15px", display:"none" }}>
         {results.length === 0 && query && (
           <div >No results found</div>
         )}
 
-          {results.map((item) => (
-        <ProductCompare key={item.id} />
-        ))}
+          {/* {results.map((item) => (
+        <ProductCompare key={item.id} img={""} product={""} price={""} />
+        ))} */}
       </div>
     </div>
   );

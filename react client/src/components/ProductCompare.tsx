@@ -1,21 +1,14 @@
-import "./styling/ProductCompare.css"
+import "./styling/ProductCompare.css";
 
-
-interface probs{
-  img:string,
-  product:string,
-  price:string
+interface probs {
+  img: string;
+  product: string;
+  price: string;
 }
-export default function ProductCompare({img, product, price}:probs) {
-
-
-
-
-
-
+export default function ProductCompare({ img, product, price }: probs) {
   return (
-    <div>
-      <div style={{zIndex: 2}} className="product-card">
+    <>
+      <div style={{ zIndex: 2}} className="product-card">
         <div className="image-container">
           <img src={img} alt="product not found" />
           <div className="favourites" id="heart">
@@ -23,22 +16,24 @@ export default function ProductCompare({img, product, price}:probs) {
           </div>
         </div>
 
-        <div className="product-info">
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "100%", height:"auto"}}
+          className=""
+        >
           <div className="title">{product}</div>
           <div className="avgprice">AVG. Price</div>
-          <div className="price">{"R"+price}</div>
+          <div className="price">{"R" + price}</div>
         </div>
 
         {/* <!-- Absolute compare button --> */}
         <div className="compare-container">
-            <a href="#"> 
+          <a href="#">
             <button className="CompareButton">Compare</button>
-          </a> 
+          </a>
         </div>
 
         <div className="box"></div>
       </div>
-  
-    </div>
-  )
+    </>
+  );
 }

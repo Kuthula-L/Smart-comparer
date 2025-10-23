@@ -35,8 +35,8 @@ function Filter() {
           className="filter-button"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <span className="filter-icon">🔍</span>
-          Filter {selectedShops.length > 0 && `(${selectedShops.length})`}
+          <img style={{width:25}} src="/filter.svg" className="filter-icon"/>
+           {selectedShops.length > 0 && `(${selectedShops.length})`}
         </button>
 
         {isOpen && (

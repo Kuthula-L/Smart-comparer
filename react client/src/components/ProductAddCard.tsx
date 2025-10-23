@@ -2,21 +2,21 @@ import './styling/ProductAdd.css';
 
 // Define color schemes for each store
 const storeColors = {
-    Woolworths: {
+    'Woolworths': {
     border: '#000000',
     imageBox: '#808080',
     buttonBorder: '#000000', 
     innerButton: '#000000',
     logoBackground: '#000000',
-    logoPath: '/public/woolworths.svg'
+    logoPath: '/woolworths.svg'
   },
-    Checkers: {
+    'Checkers': {
     border: '#AFEEEE',
     imageBox: '#AFEEEE',
     buttonBorder: '#AFEEEE',
     innerButton: '#AFEEEE',
     logoBackground: '#48D1CC',
-    logoPath: '/public/checkers.svg'
+    logoPath: '/checkers.svg'
   },
     'Pick N Pay': {
     border: '#E6E6FA',
@@ -24,15 +24,15 @@ const storeColors = {
     buttonBorder: '#E6E6FA',
     innerButton: '#E6E6FA',
     logoBackground: '#9370DB',
-    logoPath: '/public/pnp.svg'
+    logoPath: '/pnp.svg'
   },
-    Shoprite: {
+    'Shoprite': {
     border: '#FFC0CB',
     imageBox: '#FFC0CB',
     buttonBorder: '#FFC0CB',
     innerButton: '#FFC0CB',
     logoBackground: '#FF0000',
-    logoPath: '/public/shoprite.svg'
+    logoPath: '/shoprite.svg'
   },
     default: {
     border: '#f2ec9b',
@@ -75,7 +75,7 @@ export default function ProductAddCard({
           </div>
           <div 
             className="add-button-background-box"
-            style={{ borderColor: storeData.buttonBorder }}
+            style={{ borderLeftColor: storeData.buttonBorder , borderTopColor: storeData.buttonBorder }}
           >
             <div 
               className="add-button-inner-background-box"

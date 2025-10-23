@@ -5,7 +5,7 @@
 }
 
 .product-card-box {
-  width: 170px;
+  width: 160px;
   height: 245px;
   background: white;
   border: 3px solid; /* Color will be set via style */
@@ -62,12 +62,17 @@
   width: 75px;
   height: 60px;
   background-color: white;
-  border: 3px solid; /* Color will be set via style */
+  /* border: 3px solid;  */
+  border-left: 3px solid;
+  border-top: 3px solid;
+  /* Color will be set via style */
   border-top-left-radius: 15px;
   border-bottom-color: white;
   border-right: white;
-  left: 92px;
-  top: 180px;
+  /* left: 92px; */
+  right:-3px;
+  /* top: 180px; */
+  bottom: -3px;
   position: absolute;
   z-index: 5;
 }
