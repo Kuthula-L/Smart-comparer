@@ -1,4 +1,5 @@
 import './App.css'
+import Basket from './pages/Basket'
 import DashboardHome from './pages/DashboardHome'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
   return (
     <>
       <DashboardHome></DashboardHome>
+      {/* <Basket></Basket> */}
     </>
     
   )

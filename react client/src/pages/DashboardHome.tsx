@@ -9,48 +9,31 @@ import ProductAddCard from "../components/ProductAddCard"
 
 
 type DataType = {
-compared_data: any[], 
-uncomparable_data: {
-    Checkers: any[], 
-    Shoprite: any[], 
-    WoolWorths: any[], 
-    PicknPay: any[]
-}
+    compared_data: any[], 
+    uncomparable_data: {
+        Checkers: any[], 
+        Shoprite: any[], 
+        WoolWorths: any[], 
+        PicknPay: any[]
+    }
 }
 
 function DashboardHome() {
 
 
-    const [Data, setData] = useState<DataType>()
+    const [Data, setData] = useState<any>()
     const [mixData, setmix] = useState<JSX.Element[]>([])
-    // const [comparedData, setComparedData] = useState<any>([])
-    // const [woolworthsData, setWoolworthsData] = useState<any>([]),
-    // // let woolworthsData:any = []
-    // const [ShoprightData, setShoprightData] = useState<Object[]|any>(),
-    // const [checkersData, setcheckersData] = useState<Object[]|any>(),
-    // const [pnpData, setPnpData] = useState<Object[]|any>(),
-    
-    // data = {"compared_data": comparedData, 
-    //         "uncomparable_data": {"Checkers": checkers, "Shoprite":  Shoprite, "WoolWorths": WoolWorths, "PicknPay":PicknPay}
-    //         }
+   
     function setValue(data:any){
         setData(data)
-
-
-
         const woolworthsData = data?.uncomparable_data.WoolWorths
         const ShoprightData = data.uncomparable_data.Shoprite
         const pnpData = data.uncomparable_data.PicknPay
         const checkersData = data.uncomparable_data.Checkers
         const comparedData = data.compared_data
 
+    
 
-        // setComparedData(Data?.compared_data)
-        // setWoolworthsData(Data?.uncomparable_data.WoolWorths)
-        // // woolworthsData = Data?.uncomparable_data.WoolWorths
-        // setShoprightData(Data?.uncomparable_data.Shoprite)
-        // setPnpData(Data?.uncomparable_data.PicknPay)
-        // setcheckersData(Data?.uncomparable_data.Checkers)
 
         if (comparedData)
         for (let i = 0; i < comparedData.length; i++) {
@@ -71,10 +54,7 @@ function DashboardHome() {
                 const img = woolworthsData[0].Img_proccessed
 
                 console.log(productName, price, img)
-                // const productName = woolworthsData[i][0]
                 
-                // mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="woolworths"></ProductAddCard>)
-                // setmix([...mixData, <ProductAddCard productName={productName} productImage={img} productPrice={price} store="Woolworths"></ProductAddCard>])
                  mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store='Checkers'></ProductAddCard>)
 
             }
@@ -110,18 +90,14 @@ function DashboardHome() {
             
         }
 
-
-        // console.log(mixData)
-        // console.log("this is compared data\n", comparedData)
-        // console.log("this is woolworths data\n", woolworthsData)
-
-        // console.log(data)
+        console.log(Data)
+      
     }
 
 
-    useEffect(()=>{
-        
-    },[])
+    function clickCompare(e:React.TouchEvent){
+        // e.
+    }
 
   return (
     <>
@@ -133,6 +109,7 @@ function DashboardHome() {
             <Filter></Filter>
            
             <div style={{background:"", color: "white", width:210, height:45, borderRadius:"70px", placeContent:'center', border:"1px solid black", display:"flex"}}><button style={{width:200, height:35, backgroundColor: "white", borderRadius:70, color:"black", placeSelf:"center", border:"1px solid black"}}>Grocary List</button></div>
+            <div style={{display:"none"}} className="pop-up"></div>
             {/* <Sort></Sort> */}
         </div>
         </div>
@@ -143,7 +120,7 @@ function DashboardHome() {
         
         {/* <ProductAddCard productName="" productImage="" productPrice="" store=""></ProductAddCard> */}
 
-        <div id="product-container" style={{display:'grid', gridTemplateColumns: "repeat(2, 160px)", gap: '20px', width:'100%',justifyContent: "center", zIndex:0}}>
+        <div id="product-container" style={{display:'grid', gridTemplateColumns: "repeat(2, 160px)", gap: '20px', width:'100%',justifyContent: "center", zIndex:0, marginTop:30}}>
         
                 {mixData}
         

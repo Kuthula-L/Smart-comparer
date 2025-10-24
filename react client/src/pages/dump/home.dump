@@ -1,0 +1,31 @@
+ // const [comparedData, setComparedData] = useState<any>([])
+    // const [woolworthsData, setWoolworthsData] = useState<any>([]),
+    // // let woolworthsData:any = []
+    // const [ShoprightData, setShoprightData] = useState<Object[]|any>(),
+    // const [checkersData, setcheckersData] = useState<Object[]|any>(),
+    // const [pnpData, setPnpData] = useState<Object[]|any>(),
+    
+    // data = {"compared_data": comparedData, 
+    //         "uncomparable_data": {"Checkers": checkers, "Shoprite":  Shoprite, "WoolWorths": WoolWorths, "PicknPay":PicknPay}
+    //         }
+
+
+        // setComparedData(Data?.compared_data)
+        // setWoolworthsData(Data?.uncomparable_data.WoolWorths)
+        // // woolworthsData = Data?.uncomparable_data.WoolWorths
+        // setShoprightData(Data?.uncomparable_data.Shoprite)
+        // setPnpData(Data?.uncomparable_data.PicknPay)
+        // setcheckersData(Data?.uncomparable_data.Checkers)
+
+
+
+    // const productName = woolworthsData[i][0]
+                
+                // mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="woolworths"></ProductAddCard>)
+                // setmix([...mixData, <ProductAddCard productName={productName} productImage={img} productPrice={price} store="Woolworths"></ProductAddCard>])
+
+                  // console.log(mixData)
+        // console.log("this is compared data\n", comparedData)
+        // console.log("this is woolworths data\n", woolworthsData)
+
+        // console.log(data)
