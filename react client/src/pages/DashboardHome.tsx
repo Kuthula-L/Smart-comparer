@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar"
 import ProductCompare from "../components/ProductCompare"
 import HeaderComponent from "../components/HeaderComponent"
 import Filter from "../components/Filter"
-import ProductAddCard from "../components/ProductAddCard"
+import ProductAddCard from "../components/ProductCard"
 
 
 
