@@ -87,10 +87,10 @@ export default function ProductAddCard({
 
   return (
     <div>
-      <div className="product-card-container">
+      <div style={{ borderColor: storeData.border }} className="product-card-container product-card-box">
         <div 
-          className="product-card-box"
-          style={{ borderColor: storeData.border }}
+          // className="product-card-box"
+          // style={{ borderColor: storeData.border }}
         >
           <div 
             className="product-image-box"
@@ -122,9 +122,9 @@ export default function ProductAddCard({
         >
           <img src={logoToUse} alt={`${store} logo`}/>
         </div>
-        <div className="product-info">
+        <div  style={{display: "flex", flexDirection: "column", width: "100%", height:"auto", justifyItems:"start", marginTop:-10}} className="product-inf">
           <div className="Product-Name">{productName}</div>
-          <div className="Product-Price">Price</div>
+          <div className="Product-Price-label">Price</div>
           <div className="Product-Price">R{productPrice}</div>
         </div>
       </div>

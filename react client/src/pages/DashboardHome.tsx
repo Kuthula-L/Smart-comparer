@@ -49,48 +49,48 @@ function DashboardHome() {
 
             if(i<woolworthsData?.length){
 
-                const productName = woolworthsData[0].product_name
+                const productName = woolworthsData[0].Product_name
                 const price = woolworthsData[0].Price
-                const img = woolworthsData[0].Img_proccessed
+                const img = woolworthsData[0].Img_processed
 
                 console.log(productName, price, img)
                 
-                 mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store='Checkers'></ProductAddCard>)
+                 mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store='Woolworths'></ProductAddCard>)
 
             }
             if(i<ShoprightData?.length){
 
-                const productName = ShoprightData[i].product_name
+                const productName = ShoprightData[i].Product_name
                 const price = ShoprightData[i].Price
-                const img = ShoprightData[i].Imag_proccessed
+                const img = ShoprightData[i].Imag_processed
                 // const productName = woolworthsData[i][0]
 
-                mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="shoprigt"></ProductAddCard>)
+                mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="Shoprite"></ProductAddCard>)
                 // setmix([...mixData, <ProductAddCard productName={productName} productImage={img} productPrice={price} store='Shoprite'></ProductAddCard>])
             }
             if(i<checkersData?.length){
 
-                const productName = checkersData[i].product_name
+                const productName = checkersData[i].Product_name
                 const price = checkersData[i].Price
-                const img = checkersData[i].Imag_proccessed
+                const img = checkersData[i].Imag_processed
                 // const productName = woolworthsData[i][0]
 
                 mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store='Checkers'></ProductAddCard>)
             }
             if(i<pnpData?.length){
 
-                const productName = pnpData[i].product_name
+                const productName = pnpData[i].Product_name
                 const price = pnpData[i].Price
-                const img = pnpData[i].Img_proccessed
+                const img = pnpData[i].Img_processed
                 // const productName = woolworthsData[i][0]
 
-                mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="picknpay"></ProductAddCard>)
+                mixData?.push(<ProductAddCard productName={productName} productImage={img} productPrice={price} store="Pick N Pay"></ProductAddCard>)
                 // setmix([...mixData, <ProductAddCard productName={productName} productImage={img} productPrice={price} store='Shoprite'></ProductAddCard>])
             }
             
         }
 
-        console.log(Data)
+        console.log(data)
       
     }
 

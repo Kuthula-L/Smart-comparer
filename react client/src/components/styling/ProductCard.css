@@ -1,12 +1,15 @@
 .product-card-container {
   display: inline-block;
-  margin: 10px;
+  margin: 0px;
   position: relative;
+  width: 160px;
+  height: 245px;
 }
 
 .product-card-box {
-  width: 170px;
+  /* width: 160px; */
   height: 245px;
+  /* height: 100%; */
   background: white;
   border: 3px solid; /* Color will be set via style */
   border-radius: 10px;
@@ -23,6 +26,7 @@
 .product-image-box {
   width: 100%;
   height: 70%;
+  height: 150px;
   
   border-radius: 10px;
   overflow: hidden;
@@ -59,16 +63,16 @@
 }
 
 .add-button-background-box {
-  width: 75px;
-  height: 60px;
+  width: 65px;
+  height: 55px;
   background-color: white;
   /* border: 3px solid;  */
   border-left: 3px solid;
   border-top: 3px solid;
   /* Color will be set via style */
-  border-top-left-radius: 15px;
-  border-bottom-color: white;
-  border-right: white;
+  border-top-left-radius: 30px;
+  /* border-bottom-color: white; */
+  /* border-right: white; */
   /* left: 92px; */
   right:-3px;
   /* top: 180px; */
@@ -81,10 +85,12 @@
   width: 50px;
   height: 50px;
   /* background-color will be set via style */
-  top: 10px;
-  right: 5px;
+  top: 5px;
+  /* right: px;
+   */
+   left: 10px;
   position: absolute;
-  border-radius: 25px;
+  border-radius: 50px;
   border-bottom-left-radius: 5px;
   color: white;
   font-size: 25px; 
@@ -94,6 +100,7 @@
   justify-content: center;
   text-align: center;
   z-index: 5;
+
 }
 .AddButton {
   background: transparent;
@@ -153,16 +160,31 @@
   position: absolute;
   bottom: 32px;
   z-index: 5;
-  
   left: 1px;
 }
 
 .Product-Name {
-  font-size: 10px;
+  font-size: 12px;
+  width: 130px;
+  white-space: nowrap;
   font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-left: -5px;
+  margin-top: -2px;
 }
 
 .Product-Price {
-  font-size: 10px;
+  font-size: 12px;
+  margin-left: -5px;
+   margin-top: 2px;
   font-weight: bold;
+}
+
+.Product-Price-label{
+  font-size: 12px;
+  margin-left: -5px;
+   margin-top: 2px;
+  color: #444;
+   /* margin-top: -5 */
 }

@@ -17,7 +17,7 @@ export default function ProductCompare({ img, product, price }: probs) {
         </div>
 
         <div
-          style={{ display: "flex", flexDirection: "column", width: "100%", height:"auto"}}
+          style={{ display: "flex", flexDirection: "column", width: "100%", height:"auto", justifyItems:"start"}}
           className=""
         >
           <div className="title">{product}</div>
