@@ -39,7 +39,7 @@ const LandingPage = () => {
       </div>
 
       <a 
-        href="/src/components/Login&Register/signup.html" 
+        href="/src/components/pages/SignUp.tsx" 
         className="landing-page-compare-button"
         aria-label="Compare Prices and sign up"
       >

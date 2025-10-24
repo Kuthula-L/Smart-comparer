@@ -26,8 +26,8 @@
 }
 
 .BubbleIcons img {
-  width: 250px;  /* Specific size for bubble icons */
-  height: 250px;
+  width: 300px;  /* Specific size for bubble icons */
+  height: 300px;
 }
 
 .CopyRight {
@@ -52,21 +52,21 @@
 }
 
 .ManStanding img {
-  width: 160px;  /* Specific size for man standing */
-  height: 300px;
+  width: 200px;  /* Specific size for man standing */
+  height: 320px;
 }
 
 .Shopicons {
   position: absolute;
-  bottom: 50px;
+  bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
  
 }
 
 .Shopicons img {
-  width: 300px;  /* Specific size for shop icons */
-  height: 210px;
+  width: 340px;  /* Specific size for shop icons */
+  height: 300px;
 }
 
 .bold-text {
@@ -118,17 +118,20 @@
 .quote{
     
     position:absolute;
-    bottom:260px;
+    font-weight:bold;
+    bottom:320px;
     left:55px;
 }
 
 .quote-2{
     position:absolute;
-    bottom:500px;
-    left:55px;
+    bottom:575px;
+    left:40px;
+    font-size:20px;
+    font-weight:bold;
 }
 .quote-1{
-
+    font-weight:bold;
     position:absolute;
     left:25px;
     top:110px;

@@ -1,14 +1,16 @@
 import './styling/BasketTotal.css';
 
-const BasketTotal = () => {
+const BasketTotal = ({totalPrice=0}) => {
   // Hardcoded value for display
-  const totalPrice = 900.00;
+  
 
   return (
     <div className="basket-total-container">
       <div className="basket-title">Basket Total</div>
       <div className="basket-pill">
+        <div className="basket-inner-pill">
         <span className="basket-amount">R{totalPrice.toFixed(2)}</span>
+        </div>
       </div>
     </div>
   );
