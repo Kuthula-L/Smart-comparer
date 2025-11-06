@@ -20,7 +20,7 @@
 }
 
 .BubbleIcons {
-  position: absolute;
+  /* position: absolute; */
   top:295px;
   right: 65px;
 }
@@ -31,7 +31,7 @@
 }
 
 .CopyRight {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0px;
   left: 50%;
   transform: translateX(-50%);
@@ -44,7 +44,7 @@
 }
 
 .ManStanding {
-  position: absolute;
+  /* position: absolute; */
   top:15px;
   right: -70px;
   transform: translateX(-50%);
@@ -57,7 +57,7 @@
 }
 
 .Shopicons {
-  position: absolute;
+  /* position: absolute; */
   bottom: 45px;
   left: 50%;
   transform: translateX(-50%);
@@ -78,7 +78,7 @@
 }
 
 .landing-page-compare-button {
-  position: absolute;
+  /* position: absolute; */
   left: 10px;
   top: 235px;
   font-size: 14px;
@@ -117,14 +117,14 @@
 
 .quote{
     
-    position:absolute;
+    /* position:absolute; */
     font-weight:bold;
     bottom:320px;
     left:55px;
 }
 
 .quote-2{
-    position:absolute;
+    /* position:absolute; */
     bottom:575px;
     left:40px;
     font-size:20px;
@@ -132,7 +132,7 @@
 }
 .quote-1{
     font-weight:bold;
-    position:absolute;
+    /* position:absolute; */
     left:25px;
     top:110px;
 }

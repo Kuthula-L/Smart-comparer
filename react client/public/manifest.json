@@ -1,0 +1,22 @@
+{
+  "name": "SmartComparer",
+  "short_name": "SmartComparer",
+  "start_url": "/register?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00b894",
+  "scope": "/",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

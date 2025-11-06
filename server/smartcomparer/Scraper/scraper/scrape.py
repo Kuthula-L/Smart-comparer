@@ -213,21 +213,32 @@ def img_scraper(url, product):
         print(f"Error creating file: {e}")
         return False
 
-# ,[3501], [4000, 4999], [5000, 5888]
+# , [1000, 1999], [2000, 2999], [3000, 3500],[3501], [4000, 4999], [5000, 5888]
 
-def add_imgs():
-    ranges = [[0,999], [1000, 1999], [2000, 2999], [3000, 3500]]
+def add_imgs(store):
+ 
+    ranges = [[0,999]]
     for table in ranges:
         
-      data = fetch_img_links("Cheackers", table[0], table[1])
+      data = fetch_img_links(store, table[0], table[1])
       for row in data:
-        timeTowait = random.randint(8, 12)
+        timeTowait = random.randint(6, 10)
         if isinstance(row, dict) and "Img_unprocessed" in row:
             imgLink = row.get("Img_unprocessed")
+            imgLink_processed = row.get("Img_processed")
+            
             product = row.get("Product_name")
+            if imgLink_processed is not None or product is None:
+                continue
             uuid = row.get("uuid")
-            processedImg = img_scraper(imgLink, product)
-            insert_img_link("Cheackers", "Img_processed", uuid, processedImg)
+            # processedImg = ""
+            if store == "WoolWorths":
+                processedImg = img_scraper(f"https://www.woolworths.co.za/{imgLink}", product)
+            elif store == "PicknPay":
+                processedImg = img_scraper(f"https://www.pnp.co.za{imgLink}", product)
+            else:
+                processedImg = img_scraper(imgLink, product)
+            insert_img_link(store, "Img_processed", uuid, processedImg)
             print(f"added {product}")
             # print(imgLink, product)
         else:
@@ -238,10 +249,15 @@ def add_imgs():
 
 # insert_products("checkers")
 # insert_products("PicknPay")
-insert_products("WoolWorths")
+# insert_products("WoolWorths")
 # insert_products("Shoprite")
 # pnp = WoolWorths("Maize Meal")
 # pnp.scrape()
+
+# stores = ["WoolWorths","Shoprite" ]
+# for i in stores:
+#     add_imgs(i)
+add_imgs("PicknPay")
 
 # print(pnp.data)
 

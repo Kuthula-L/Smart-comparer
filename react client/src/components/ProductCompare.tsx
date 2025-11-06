@@ -1,14 +1,16 @@
+// import type { JSX } from "react";
 import "./styling/ProductCompare.css";
 
 interface probs {
   img: string;
   product: string;
   price: string;
+  click: any
 }
-export default function ProductCompare({ img, product, price }: probs) {
+export default function ProductCompare({ img, product, price, click }: probs) {
   return (
     <>
-      <div style={{ zIndex: 2}} className="product-card">
+      <div onClick={click} style={{ zIndex: 2}} className="product-card">
         <div className="image-container">
           <img src={img} alt="product not found" />
           <div className="favourites" id="heart">

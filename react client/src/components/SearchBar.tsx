@@ -1,6 +1,6 @@
 import type { ChangeEvent } from "react";
-import React, { useEffect, useImperativeHandle, useState } from "react";
-import ProductCompare from "./ProductCompare";
+import React, {  useState } from "react";
+// import ProductCompare from "./ProductCompare";
 import "./styling/SearchBar.css";
 
 interface Product {
@@ -66,6 +66,7 @@ function SearchBar ({GetHomeData}:Probs) {
       e.preventDefault();
       console.log('Searching for:', query);
       fetchitems()
+      localStorage.setItem("Change","yes" )
       // call your search function here
       // doSearch(searchQuery);
     }

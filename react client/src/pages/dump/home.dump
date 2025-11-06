@@ -29,3 +29,83 @@
         // console.log("this is woolworths data\n", woolworthsData)
 
         // console.log(data)
+
+
+        //    const clickCompare =  useCallback((i:number)=>{
+//     //    const i =  e.currentTarget.key
+//     //    console.log(Data[i])
+
+//         // if (!Data) {
+//         //     console.log("Data is undefined/null");
+//         //     return;
+//         // }
+//         console.log("Data[i]:", dataRef);
+
+//         setpop(true)
+        
+//         const comparedData :any= [[]];
+//         // const comparedData = Data[i];
+//         const data = []
+
+//         // const Product = comparedData[i].product_name
+//         // const Price = comparedData[i].base_price
+//         // const Img = comparedData[i].base_image
+
+//         // const comparedStores = comparedData.compared_stores
+
+//         // data?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={Price} store="Checkers"></ProductAddCard>)
+
+//         // const checked = {
+//         //     pnp : false, 
+//         //     checkers: false,
+//         //     wool: false,
+//         //     shoprite: false,
+//         // }
+
+
+//         // for (let i = 0; i < comparedStores.length; i++) {
+            
+//         //     if (comparedStores[i].store === "PicknPay" && !checked.pnp ) {
+//         //         data?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={comparedStores[i].price} store="Pick N Pay"></ProductAddCard>)
+                
+//         //     }
+//         //     if (comparedStores[i].store === "WoolWorths" && !checked.wool ) {
+//         //         data?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={comparedStores[i].price} store="Woolworths"></ProductAddCard>)
+                
+//         //     }
+//         //     if (comparedStores[i].store === "Shoprite" && !checked.shoprite ) {
+//         //         data?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={comparedStores[i].price} store="Shoprite"></ProductAddCard>)
+                
+//         //     }
+//         //     // if (comparedStores[i] === "PicknPay" && !checked.pnp ) {
+//         //     //     clickedData?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={compared_stores[]} store="Shoprite"></ProductAddCard>)
+                
+//         //     // }
+            
+//         // }
+//         console.log(Data)
+//         // setCompare(data)
+
+//     //    clickedData?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={Price} store="Shoprite"></ProductAddCard>)
+//     //    clickedData?.push(<ProductAddCard productName={Product} productImage={Img} productPrice={Price} store="Shoprite"></ProductAddCard>)
+//     }, [Data])
+
+
+{/* <div style={{alignItems:"center", display:isMenu?"none":"flex", flexDirection:"column"}}>
+        <HeaderComponent  onClick={clickMenu}></HeaderComponent>
+        <div style={{marginTop:20}}><SearchBar GetHomeData={setValue}></SearchBar></div>
+        <div style={{height:'auto', width:"auto", marginTop:30, display:"flex", gap:5}}>
+            <Filter></Filter>
+            <Sort></Sort>
+        
+           
+            <div onClick={clickList} style={{background:"", color: "white", width:210, height:45, borderRadius:"70px", placeContent:'center', border:"1px solid black", display:"flex"}}><button style={{width:200, height:35, backgroundColor: "white", borderRadius:70, color:isList?"white":"black", placeSelf:"center", border:"1px solid black", background:isList?"black":"white"}}>Grocary List</button></div>
+            <div style={{display:"none"}} className="pop-up"></div>
+        </div>
+        </div> */}
+
+ {/* <ProductCompare img={"/vite.svg"} product={"bread"} price={"20"}></ProductCompare> */}
+
+        
+        
+        {/* <ProductAddCard productName="" productImage="" productPrice="" store=""></ProductAddCard> */}

@@ -1,9 +1,11 @@
+// import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, motion } from "motion/react"
 import './styling/ProductCard.css'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Define color schemes for each store
 const storeColors = {
-    'Woolworths': {
+    'WoolWorths': {
     border: '#000000',
     imageBox: '#808080',
     buttonBorder: '#000000', 
@@ -21,7 +23,7 @@ const storeColors = {
     logoBackground: '#48D1CC',
     logoPath: '/checkers.svg'
   },
-    'Pick N Pay': {
+    'PicknPay': {
     border: '#84234B',
     imageBox: '#84234B',
     buttonBorder: '#84234B',
@@ -57,12 +59,18 @@ export default function ProductAddCard({
   storeLogo = "",
   store = "",// Empty by default to use default colors
   isInBasket = false, //track if product is in basket
+  // isInFavourites = false, //track if product is in basket
   onAddToBasket = () => {}, // Callback for adding to basket
-  onRemoveFromBasket = () => {}, // Callback for removing from basket
+  onRemoveFromBasket = () => {},
+  productid = "",
+  page=""
+   // Callback for removing from basket
 }) {
 
   // State to track if product is in basket 
   const[inBasket,setInBasket] = useState(isInBasket);
+  const[isClicked,setClicked] = useState(false);
+  const[show,setShow] = useState(true);
   // Get colors for the current store, fallback to default if store not specified
   
   const storeData = store && storeColors[store as keyof typeof storeColors] 
@@ -72,22 +80,115 @@ export default function ProductAddCard({
 
   const handleButtonClick = () =>{
 
+    async function BasketItems(){ 
+          // const  res = 
+          await fetch("http://127.0.0.1:8000/products/addToBasket/", {
+            method:"POST",
+            body:JSON.stringify({
+              "product_uuid":productid,
+              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+
+            })
+          })
+          // const data = await res.json()
+            
+            
+            // console.log(data.data)
+
+    }
+    async function RemoveBasketItems(){ 
+          // const  res = 
+          await fetch("http://127.0.0.1:8000/products/removeFromBasket/", {
+            method:"POST",
+            body:JSON.stringify({
+              "product_uuid":productid,
+              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+
+            })
+          })
+          // const data = await res.json()
+            
+            
+            // console.log(data.data)
+
+    }
+
       if(inBasket){
         // Remove from basket
+        RemoveBasketItems()
         setInBasket(false);
         onRemoveFromBasket();
+        setShow(false)
+          
       }
       else{
        // Add to basket
+       BasketItems()
        setInBasket(true);
        onAddToBasket();
+
+
       }
 
   }
 
+  function clickHeart(){
+    async function addFavourites(){ 
+          // const  res = 
+          await fetch("http://127.0.0.1:8000/products/addToFavourites/", {
+            method:"POST",
+            headers: {
+                  "Content-Type": "application/json",  // Add this!
+                },
+            body:JSON.stringify({
+              "product_uuid":productid,
+              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+
+            })
+          })
+          // const data = await res.json()
+          
+    }
+    async function RemoveFromFavourites(){ 
+          // const  res = 
+          await fetch("http://127.0.0.1:8000/products/removeFromFavourites/", {
+            method:"POST",
+            headers: {
+                  "Content-Type": "application/json",  // Add this!
+                },
+            body:JSON.stringify({
+              "product_uuid":productid,
+              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+
+            })
+          })
+          // const data = await res.json()
+          
+    }
+
+    if(!isClicked){
+      addFavourites()
+    }else{
+      RemoveFromFavourites()
+    }
+
+    setClicked(true)
+  }
+
+
+  useEffect(()=>{
+    if (page !== "" ){
+      setClicked(true)
+    }
+  },[])
+
+
   return (
     <div>
-      <div style={{ borderColor: storeData.border }} className="product-card-container product-card-box">
+      
+        {show ? <AnimatePresence initial={false}>
+
+      <motion.div key="box" exit={{ opacity: 0 }}  style={{ borderColor: storeData.border }} className="product-card-container product-card-box">
         <div 
           // className="product-card-box"
           // style={{ borderColor: storeData.border }}
@@ -98,16 +199,16 @@ export default function ProductAddCard({
           >
             <img src={productImage} alt="product not found" />
             <div className="favourites" id="heart">
-              <img src="/whiteHeart.svg" alt="Favourites" />
+              <img onClick={clickHeart}  src={isClicked?"/heart-filled.svg":(page===""?"/whiteHeart.svg":"/heart-filled.svg")} alt="Favourites" />
             </div>
           </div>
           <div 
-            className="add-button-background-box"
+            className={page===""?"add-button-background-box":""}
             style={{ borderLeftColor: storeData.buttonBorder , borderTopColor: storeData.buttonBorder }}
           >
             <div 
-              className="add-button-inner-background-box"
-              style={{ backgroundColor: storeData.innerButton}}
+              className={"add-button-inner-background-box"}
+              style={{ backgroundColor: storeData.innerButton, display:page===""?"block":"none"}}
             >
              <button className="AddButton" style={{ color:'buttonTextColor', backgroundColor: 'transparent' }} onClick={handleButtonClick}>
               {inBasket ? '-':'+'}
@@ -126,8 +227,9 @@ export default function ProductAddCard({
           <div className="Product-Name">{productName}</div>
           <div className="Product-Price-label">Price</div>
           <div className="Product-Price">R{productPrice}</div>
-        </div>
       </div>
-    </div>
+        </motion.div>
+        </AnimatePresence> : null}
+  </div>
   )
 }

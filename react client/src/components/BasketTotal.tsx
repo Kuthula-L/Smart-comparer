@@ -1,6 +1,10 @@
 import './styling/BasketTotal.css';
 
-const BasketTotal = ({totalPrice=0}) => {
+
+interface probs {
+  total:number
+}
+function BasketTotal ({total}:probs){
   // Hardcoded value for display
   
 
@@ -9,7 +13,7 @@ const BasketTotal = ({totalPrice=0}) => {
       <div className="basket-title">Basket Total</div>
       <div className="basket-pill">
         <div className="basket-inner-pill">
-        <span className="basket-amount">R{totalPrice.toFixed(2)}</span>
+        <span className="basket-amount">R{total}</span>
         </div>
       </div>
     </div>

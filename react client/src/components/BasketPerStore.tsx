@@ -48,7 +48,7 @@ function BasketPerStore({storeName, TotalAmount,}: BasketPerStoreProps) {
         setImage("");
         break;
     }
-  },[storeName])
+  },[])
 
   return (
     <>

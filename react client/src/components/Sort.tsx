@@ -16,6 +16,7 @@ function Sort() {
     setIsOpen(false);
     // Add your sort logic here
     console.log("Sorting by:", value);
+    console.log(label)
   };
 
   return (
@@ -25,8 +26,8 @@ function Sort() {
           className="sort-button"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <span className="sort-icon">↕️</span>
-          Sort {selectedOption && `: ${sortOptions.find(opt => opt.value === selectedOption)?.label}`}
+          <img style={{width:25}} src="/sort.svg" className="filter-icon"/>
+           {selectedOption && `: ${sortOptions.find(opt => opt.value === selectedOption)?.label}`}
         </button>
 
         {isOpen && (

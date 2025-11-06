@@ -1,42 +1,27 @@
-import React from 'react';
+// import DrawerMenu from "./DrawerMenu";
 
-const HeaderComponent: React.FC = () => {
+interface Probs{
+    onClick:()=>void
+}
+
+
+
+function HeaderComponent({onClick}:Probs) {
+
+    
   return (
     <>
-    <header style={styles.header}>
-        <img src="Smart_Comparer_Logo-removebg.png" style={styles.logo} alt="Smart Compare Logo" />
-        <img src="logout-svgrepo-com.svg" style={styles.logout} alt="Smart Compare Logout " />
-
+    <header style={{display:'flex', justifyContent:'space-around', width:"100vw", height:"70px", alignItems:"center"}}>
+        <img src="/Smart_Comparer_Logo-removebg.png" style={{height:30, width:30}} alt="Smart Compare Logo" />
+        <div style={{color: 'black', fontSize: 24, fontFamily: 'Josefin Slab', fontWeight: '600', wordWrap: 'break-word'}}>Smart Comparer</div>
+        <img onClick={onClick} src="/DrawerNav.svg" style={{height:30, width:30}} alt="Smart Compare Logout " />
+        
     </header>
+
+
+
         </>
   );
-};
-const styles ={
-    header: {
-        display: "flex",
-        justifyContent: "space-between", // pushes one to the left and the other to the right
-        alignItems: "flex-start",
-        padding: "10px 20px",
-        //position: "absolute,"
-        top: 0,
-        left:0,
-        right:0,
-        zIndex: 3,
-
-    }, 
-    logo: {
-        width: "100px",
-        height: "100px",
-        borderRadius: "60%",
-        marginTop: "-10px",
-        
-    },
-    logout: {
-        width: "60px",
-        height: "50px",
-        cursor: "pointer",
-        marginTop: "20px",
-    }
 }
 
 export default HeaderComponent;

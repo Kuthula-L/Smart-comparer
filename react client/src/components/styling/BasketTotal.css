@@ -1,6 +1,6 @@
 .basket-total-container {
   position: fixed;
-  bottom: 80px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   background: rgb(255, 255, 255);
@@ -10,14 +10,14 @@
   border-bottom-left-radius: 45px;
   border-bottom-right-radius: 45px;
   padding: 12px 25px;
-  box-shadow: 0 15px 15px rgba(14, 12, 12, 0.1);
+  box-shadow: 0 10px 10px rgba(14, 12, 12, 0.1);
   z-index: 1000;
   text-align: center;
 }
 
 .basket-title {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 15px;
   color: #333;
   margin-bottom: 10px;
 }

@@ -8,6 +8,7 @@ import dns.resolver
 import uuid
 from decouple import config
 from supabase import Client, create_client
+from django.views.decorators.csrf import csrf_exempt
 
 # payload = {"userId":32, "exp":"time"}
 
@@ -50,7 +51,15 @@ def verify_token(request):
     status = jwt.decode(token, "random string", algorithm="HS256")
     
     return JsonResponse({"massage":False})
+
+@csrf_exempt  
+def addGuest(request):
+    payload = json.load(request.data)
+    uuid = payload.get("user_uuid")
     
+    res = supabase.table("guest").insert({"user_id":uuid}).execute()
+    return JsonResponse({"response":"added"})
+
 
 def oAuth():
     return JsonResponse({"Link":""})

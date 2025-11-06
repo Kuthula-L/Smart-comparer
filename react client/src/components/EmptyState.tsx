@@ -1,12 +1,20 @@
 import type { ChangeEvent } from "react";
-import React, { useState } from "react";
+import { useState } from "react";
 import "./styling/EmptyState.css";
+import { AnimatePresence } from "motion/react"
+import * as motion from "motion/react-client"
+import React from "react";
 
 interface EmptyStateProps {
-  type?: "list" | "basket" | "favorites";
+  // type?: "list" | "basket" | "favorites";
+  type:string;
+  setFile: (file:any)=>void;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ type = "list" }) => {
+//  React.FC<EmptyStateProps> = 
+
+  const EmptyState = React.memo ( ({ type , setFile}:EmptyStateProps)=>{
+    
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -56,6 +64,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type = "list" }) => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files?.[0] || null);
+     setFile(e.target.files?.[0])
   };
 
   const handleUpload = () => {
@@ -74,9 +83,21 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type = "list" }) => {
   };
 
   return (
-    <div className="empty-state">
-      <img src={config.img} alt="Empty illustration" className="illustration" />
-      <h2 className="title">{config.title}</h2>
+
+     <AnimatePresence mode="wait">
+    
+        
+    <motion.div  
+                            initial={{ y: 0, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            transition={{ duration: 0.4 }}
+                          layoutId="underline" className="empty-state">
+      <div style={{backgroundColor:type==="basket"?"rgba(242, 236, 155, 0.36)":"", borderRadius:"50%", width:"250px", height:"250px"}}>
+        <img  src={config.img} alt="Empty illustration" className="illustration" />
+        
+      </div>
+      <h2 style={{marginTop: type==="basket"?"20px":0}} className="title">{config.title}</h2>
       <p className="message">{config.message}</p>
       <button className="action-btn" onClick={handleButtonClick}>
         {config.buttonText}
@@ -103,8 +124,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({ type = "list" }) => {
           </div>
         </div>
       )}
-    </div>
+    {/* </div> */}
+    </motion.div>
+        </AnimatePresence>
   );
-};
+})
 
 export default EmptyState;

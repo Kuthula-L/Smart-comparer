@@ -30,7 +30,7 @@ def search_products_fuzzy(search_text, table):
         ).execute()
     return response.data
 
-def get_compared_data(search_text):
+def get_compared_data(search_text, limit):
     response = supabase.rpc(
     "compare_across_stores",
     {
@@ -39,8 +39,20 @@ def get_compared_data(search_text):
         "similarity_threshold": 0.2,
         "price_tolerance": 0.1
     }
-    ).execute()
+    ).limit(limit).execute()
     return response.data
+
+def get_products_by_store(search_text, limit, store):
+
+    
+    res = supabase.rpc("search_products", {
+    "query": search_text,
+    "store": store,
+    "limit_count": limit
+    }).execute()
+
+    results = res.data
+    return results
 
 
 

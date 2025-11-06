@@ -7,13 +7,14 @@
   padding: 2rem;
   background: #fff;
   max-width: 300px;
-  margin: 60px auto 0 auto;
+  /* margin: 60px auto 0 auto; */
+  margin-top: -35px;
   transition: all 0.3s ease;
 }
 
 /* Illustration at the top */
 .empty-state img {
-  width: 120px;
+  width: 250px;
   height: auto;
   margin-bottom: 1rem;
 }
@@ -24,10 +25,11 @@
   color: #1b1b3a;
   margin-bottom: 0.5rem;
   font-weight: 700;
+  position: static;
  
   
-  top:40%;   
-  left: 44%;
+  /* top:40%;   
+  left: 44%; */
 }
 
 /* Lighter descriptive text */

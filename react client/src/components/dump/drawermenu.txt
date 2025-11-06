@@ -1,0 +1,27 @@
+   {/*<div style={{maxWidth: 500, maxHeight:800}}>
+     <div style={{position:'absolute', top:"10px", right:"11px", backgroundColor:"white"}}><DrawerContentMenu/></div>
+     <div style={{maskImage: 'url("Subtract.svg")',maskSize: "cover",width:"370px", height:"800px"}}></div> *
+    <div
+  style={{
+    WebkitMaskImage: 'url("Subtract.svg")',
+    maskImage: 'url("Subtract.svg")',
+    WebkitMaskSize: "cover",
+    maskSize: "cover",
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+    width: "370px",
+    height: "800px",
+    backgroundImage: 'url("subtract-image.jpg")',
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+></div> 
+       <div style={{position:"absolute", zIndex:"-1", top:10, left:10,clipPath: 'polygon(0% 0%, 37% 0% , 37% 43%, 100% 43%, 100% 100% , 0px 100% )', backgroundSize:"cover", backgroundColor:"black", width:"370px", height:"800px", borderRadius:30, backgroundImage:"url('subtract-image.jpg')", backgroundPosition:"cover", border:"1px solid grey"}} ></div> 
+    </div>*/}
+
+
+     {/* <div style={{position:"absolute", border:"1px solid grey", height:"41%", left:"37.5%", top:"10px"}}></div>
+    <div style={{position:"absolute", border:"1px solid grey", width:"60%", left:"37%", top:"42%"}}></div> */}
+
+    {/* <div style={{position:"absolute", zIndex:"-1", top:10, left:10,clipPath: 'polygon(0% 0%, 37% 0% , 37% 49%, 100% 49%, 100% 100% , 0px 100% )', backgroundSize:"cover", backgroundColor:"black", width:"370px", height:"700px", borderRadius:30, backgroundImage:"url('/subtract-image.jpg')", backgroundPosition:"cover", border:"1px solid grey"}} >
+    </div>  */}
