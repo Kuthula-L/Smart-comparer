@@ -9,17 +9,57 @@ import {v4 as uuidv4} from "uuid";
 function AuthenticationPage() {
     
     const [show, setShow] = useState(false)
+    const [formData, setFormData] = useState({
+          email: '',
+          password: '',
+          confirmedPassword:""
+        });
+
+    const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
+    // const [ConfirmedPassword, setConfirmedPassword] = useState("")
     const [emailBtnText, setText] = useState("continue")
     const userid = uuidv4();
 
-    function emailAuthBtn(){
-        setShow(true)
-        setText("Sign up")
-    }
+
+    const handleSubmit = (e: React.FormEvent) => {
+          e.preventDefault();
+          console.log(formData);
+        };
+
+    function setEmailAuthBtn(){
+      
+      async function checkEmail(){
+        const res = await fetch("", {
+          method:"POST", 
+          body:JSON.stringify({"email":email})
+        })
+        
+        const data = await res.json()
+        
+        
+        if (data.exsist) {
+            setText("Login") 
+         } else{
+            setText("Sign up")
+          
+        }
+      }
+      
+      checkEmail()
+      setShow(true)
+        // localStorage.setItem("user","user")
+    } 
+
+
     function goBack(){
         setShow(false)
         setText("Continue")
     }
+
+    
+
+
     function addGuest(){
         async function addGuest(){ 
           const  res = await fetch("http://127.0.0.1:8000/auth/add_guest/", 
@@ -33,6 +73,7 @@ function AuthenticationPage() {
         console.log(data)
 
         }
+        localStorage.setItem("user","guest")
 
         addGuest()
     }
@@ -60,26 +101,30 @@ function AuthenticationPage() {
 
     
         <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+
+          <form onSubmit={handleSubmit}>
             <div style={{width: 325, height: 46, borderRadius: 11,background: '#EFEFEF',}}>
-                <input placeholder="Enter email or phone number" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%", marginLeft:"5px"}}></input>
+                <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter email or phone number" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%", marginLeft:"5px"}}></input>
             </div>
 
             <AnimatePresence initial={false}>
             {show?<motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} key="box" style={{width: 325, height: 46,  borderRadius: 11,background: '#EFEFEF',marginLeft:"5px"}}>
                 {/* display:show?"block":"none" */}
-                <input placeholder="Enter Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
+                <input  type="password" onChange={(e)=>{setPassword(e.target.value)}}  placeholder="Enter Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
             </motion.div>:null}</AnimatePresence>
 
 
             <AnimatePresence initial={false}>
             {show?<motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} key="box2"  style={{width: 325, height: 46, borderRadius: 11,background: '#EFEFEF',marginLeft:"5px"}}>
                 {/* display:show && emailBtnText ==="Sign up"?"block":"none" */}
-                <input placeholder="Confirm Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
+                <input type="password" onChange={(e)=>{setConfirmedPassword(e.target.value)}} placeholder="Confirm Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
             </motion.div>:null}
             </AnimatePresence>
-            <button onClick={emailAuthBtn} style={{width: 325, height: 46, background: '#FFC727', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: 11, border: '1px #E3DFDF solid'}}>
+            <button type={emailBtnText !== "continue"?"submit":"button"} onClick={setEmailAuthBtn} style={{width: 325, height: 46, background: '#FFC727', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: 11, border: '1px #E3DFDF solid'}}>
                 <div style={{textAlign: 'center', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word'}}>{emailBtnText}</div>
             </button>
+
+            </form>
         </div>
         
         <div style={{width: 34, textAlign: 'center', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', display:show?"none":"flex"}}>or</div>

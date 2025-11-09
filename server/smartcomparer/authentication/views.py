@@ -54,11 +54,22 @@ def verify_token(request):
 
 @csrf_exempt  
 def addGuest(request):
-    payload = json.load(request.data)
-    uuid = payload.get("user_uuid")
+    try:
+        payload = json.loads(request.body)
+        uuid = payload.get("user_uuid")
+        
+        if not uuid:
+            return JsonResponse({"error": "user_uuid is required"}, status=400)
+        
+        res = supabase.table("guest").insert({"user_id": uuid}).execute()
+        
+        return JsonResponse({"status": "ok"}, status=201)
     
-    res = supabase.table("guest").insert({"user_id":uuid}).execute()
-    return JsonResponse({"response":"added"})
+    except json.JSONDecodeError as e:
+        return JsonResponse({"error": f"Invalid JSON: {str(e)}"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+        # return JsonResponse({"response":"added"})
 
 
 def oAuth():

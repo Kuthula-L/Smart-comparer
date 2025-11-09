@@ -217,7 +217,7 @@ def img_scraper(url, product):
 
 def add_imgs(store):
  
-    ranges = [[0,999]]
+    ranges = [[0,999],[1000, 1999], [2000, 2575]]
     for table in ranges:
         
       data = fetch_img_links(store, table[0], table[1])
