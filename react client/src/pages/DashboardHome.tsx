@@ -4,7 +4,7 @@ import ProductAddCard from "../components/ProductCard"
 import Addlist from "../components/Addlist"
 import DrawerMenu from "../components/DrawerMenu"
 import TopSection from "./TopSection"
-// @ts-ignore
+
 import HomeEmptyState from "../components/HomeEmptyState"
 import Carousel from "../components/Carousel"
 
@@ -20,6 +20,8 @@ import Carousel from "../components/Carousel"
 //         PicknPay: any[]
 //     }
 // }
+
+
 
 
 function DashboardHome() {
@@ -221,7 +223,7 @@ function DashboardHome() {
     <>
         
 
-        <TopSection page={"home"} isList={isList} clickMenu={clickMenu} click={() => { } } isMenu={isMenu} setValue={setValue} clickList={clickList} EmptyState={!ComparedData ? "home" : ""} stores={{}} ></TopSection>
+        <TopSection page={"home"} isList={isList} clickMenu={clickMenu} click={() => { } } isMenu={isMenu} setValue={setValue} clickList={clickList} EmptyState={!ComparedData ? "home" : ""} stores={{}}></TopSection>
 
        
         <div style={{display:isMenu?"none":"block"}}>

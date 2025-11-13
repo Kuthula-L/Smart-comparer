@@ -11,6 +11,7 @@ interface Product {
   image: string;
  
  
+ 
 }
 
 interface Probs{
@@ -34,7 +35,10 @@ function SearchBar ({GetHomeData}:Probs) {
 
   async function fetchitems(){ 
         const  res = await fetch("http://127.0.0.1:8000/products/search/", {method:"Post", headers:{ 
-        }, body: JSON.stringify({"product":query})})
+        }, body: JSON.stringify({
+          "product":query,
+          credentials: "include"
+        })})
 
         const data = await res.json()
         // setHome(data);

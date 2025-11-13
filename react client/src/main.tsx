@@ -9,17 +9,20 @@ import DashboardHome from './pages/DashboardHome.tsx'
 import Favourites from './pages/Favourites.tsx'
 import LandingPage from './pages/LandingPage.tsx'
 
+
+const token = document.cookie
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
    <BrowserRouter>
       <App />
        <Routes>
         <Route path='/' element={<LandingPage/>}/>
-        <Route path='/home' element={<DashboardHome/>}/>
+        <Route path='/home' element={<DashboardHome />}/>
         <Route path='/register' element={<AuthenticationPage/>}/>
         <Route path='/Dashboard/home' element={<DashboardHome/>}/>
         <Route path='/Dashboard/Basket' element={<Basket/>}/>
-        <Route path='/Dashboard/Favorites' element={<Favourites/>}/>
+        <Route path='/Dashboard/Favorites' element={<Favourites  />}/>
       </Routes>
    </BrowserRouter>
 

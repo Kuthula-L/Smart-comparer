@@ -5,6 +5,9 @@ import ProductAddCard from "../components/ProductCard"
 import BasketTotal from "../components/BasketTotal"
 import React from "react"
 
+
+
+
 const Basket = React.memo(() =>{
 
     const [BasketItems, setBasket] = useState<Object[]>([])
@@ -13,16 +16,17 @@ const Basket = React.memo(() =>{
 
 
     async function fetchitems(){ 
-       const  res = await fetch("http://127.0.0.1:8000/products/basket/", {method:"Get"})
+       const  res = await fetch("http://localhost:8000/products/basket/", {method:"Get", credentials: "include", headers: {
+    "Content-Type": "application/json",
+  },})
        const data = await res.json()
         setBasket(data.basket);
         setTotals(data.basketTotal)
         setStoreTotals(data.storeTotals)
         
-        console.log(data)
-
-    }
-
+        
+      }
+      
       useEffect(()=>{
         fetchitems()
     },[])

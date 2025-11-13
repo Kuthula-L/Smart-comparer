@@ -64,6 +64,9 @@ function App() {
     }
   ];
 
+  console.log(document.cookie)
+
+
 
   useEffect(() => {
   if ("serviceWorker" in navigator) {
@@ -75,6 +78,8 @@ function App() {
         console.error("⚠️ Service Worker registration failed:", err);
       }
     };
+
+  
 
     // Only register when not on landing page (if that’s what you mean)
     if (!window.location.pathname.includes("/landing")) {

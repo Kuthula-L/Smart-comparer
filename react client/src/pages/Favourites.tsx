@@ -5,6 +5,7 @@ import TopSection from './TopSection'
 import EmptyState from '../components/EmptyState'
 import ProductAddCard from '../components/ProductCard'
 
+
 function Favourites() {
 
     const [favourites, setFavourites] = useState<Object[]>([])
@@ -13,9 +14,10 @@ function Favourites() {
     
     
         async function fetchitems(){ 
-           const  res = await fetch("http://127.0.0.1:8000/products/favourits/", {
-            method:"POST",
-            body: JSON.stringify({"uuid":""})
+           const  res = await fetch("http://localhost:8000/products/favourits/", {
+            method:"Get",
+            credentials: "include"
+            // body: JSON.stringify({"token":token})
         })
            const data = await res.json()
             setFavourites(data.data);
@@ -31,7 +33,7 @@ function Favourites() {
         },[])
   return (
     <>
-    <TopSection isList={false} clickMenu={()=>{}} click={() => { } } isMenu={false} setValue={()=>{}} clickList={()=>{}} EmptyState={"favourites"} stores={stores} page={"basket"}></TopSection>
+    <TopSection isList={false} clickMenu={()=>{}} click={() => { } } isMenu={false} setValue={()=>{}} clickList={()=>{}} EmptyState={"favourites"} stores={stores} page={"basket"} ></TopSection>
 
         {favourites.length !==0? <div id="product-container" style={{display:'grid', gridTemplateColumns: "repeat(2, 160px)", gap: '20px', width:'100%',justifyContent: "center"}}>
           {favourites.map((item:any)=>{

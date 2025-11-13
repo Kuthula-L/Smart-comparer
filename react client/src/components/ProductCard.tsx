@@ -82,11 +82,12 @@ export default function ProductAddCard({
 
     async function BasketItems(){ 
           // const  res = 
-          await fetch("http://127.0.0.1:8000/products/addToBasket/", {
+          await fetch("http://localhost:8000/products/addToBasket/", {
             method:"POST",
+            credentials: "include",
             body:JSON.stringify({
               "product_uuid":productid,
-              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+              // "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
 
             })
           })
@@ -98,11 +99,12 @@ export default function ProductAddCard({
     }
     async function RemoveBasketItems(){ 
           // const  res = 
-          await fetch("http://127.0.0.1:8000/products/removeFromBasket/", {
+          await fetch("http://localhost:8000/products/removeFromBasket/", {
             method:"POST",
+            credentials: "include",
             body:JSON.stringify({
               "product_uuid":productid,
-              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+              // "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
 
             })
           })
@@ -135,14 +137,15 @@ export default function ProductAddCard({
   function clickHeart(){
     async function addFavourites(){ 
           // const  res = 
-          await fetch("http://127.0.0.1:8000/products/addToFavourites/", {
+          await fetch("http://localhost:8000/products/addToFavourites/", {
             method:"POST",
+            credentials: "include",
             headers: {
                   "Content-Type": "application/json",  // Add this!
                 },
             body:JSON.stringify({
               "product_uuid":productid,
-              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+              // "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
 
             })
           })
@@ -151,14 +154,15 @@ export default function ProductAddCard({
     }
     async function RemoveFromFavourites(){ 
           // const  res = 
-          await fetch("http://127.0.0.1:8000/products/removeFromFavourites/", {
+          await fetch("http://localhost:8000/products/removeFromFavourites/", {
             method:"POST",
+            credentials: "include",
             headers: {
                   "Content-Type": "application/json",  // Add this!
                 },
             body:JSON.stringify({
               "product_uuid":productid,
-              "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
+              // "user_uuid": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
 
             })
           })

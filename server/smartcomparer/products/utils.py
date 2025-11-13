@@ -1,6 +1,8 @@
-from unittest import result
+
+from realtime import Payload
 from supabase import Client, create_client
 from decouple import config
+import jwt
 
 key = config('SECRET_KEY')
 url = config("URL")
@@ -53,6 +55,10 @@ def get_products_by_store(search_text, limit, store):
 
     results = res.data
     return results
+
+def decodeToken(token, security_key):
+    Payload = jwt.decode(token.encode("utf-8"), security_key, algorithms=["HS256"])
+    return Payload.get("user_id")
 
 
 

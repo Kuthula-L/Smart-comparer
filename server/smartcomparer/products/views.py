@@ -5,10 +5,11 @@ from uuid import UUID
 
 from django.http import JsonResponse
 from django.shortcuts import render
+import jwt
 from pydantic import InstanceOf, Json
 import json
 
-from .utils import findProducts, get_compared_data, get_products_by_store
+from .utils import decodeToken, findProducts, get_compared_data, get_products_by_store
 from .utils import getPage_Data
 from .utils import supabase
 from .utils import search_products_fuzzy
@@ -38,6 +39,8 @@ def search(request):
     with the specified product name and returns up to 50 results.
     """
     res = json.loads(request.body)  # Parse the JSON body from the request
+    # token = request.COOKIES.get("token") 
+    # decodeToken(token, "random string")
     
     # products = supabase.table("Products").select("*, products(*)").eq("user_id", "0c05fb3d-6b91-4120-b61a-26f671f8ff1f").execute().data
     # checkers = findProducts("Products", "Product_name", res['product'], 5)  # Search for products
@@ -143,17 +146,26 @@ def getBasket(request):
             # if no valid uuid provided, return all basket rows (or you can filter differently)
     # id = getPage_Data("Basket", "")
     
-    payload = json.loads(request.body or "{}")
+    # payload = json.loads(request.body or "{}")
+    token = request.COOKIES.get("token")
     
-    uuid = payload.get("uuid")
-    user_type = payload.get("user_type")
+    
+    
+    
+    
+    
+    token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+    user_id = token_data.get("user_id")
+    user_type = token_data.get("user_type")
+    
+    print(user_id)
     
     if user_type == "user":
         table = "Basket"
     else:
         table = "guest_basket"
         # basket = supabase.table("Basket").select("*, products(*)").eq("user_id", "0c05fb3d-6b91-4120-b61a-26f671f8ff1f").execute().data
-    basket = supabase.table(table).select("*, products(*)").eq("user_id", uuid).execute().data
+    basket = supabase.table(table).select("*, products(*)").eq("user_id", user_id).execute().data
         
     
     
@@ -215,9 +227,19 @@ def addToBasket(request):
     """
     # try:
     payload = json.loads(request.body or "{}")
+    
+    token = request.COOKIES.get("token")
+    token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+    
+    
+    
+    user_type = token_data.get("user_type")
+    user_uuid = token_data.get("user_id")
     product_uuid = payload.get("product_uuid")
-    user_uuid = payload.get("user_uuid")
-    user_type = payload.get("user_type")
+    
+    # print(user_type)
+    
+    # user_uuid = payload.get("user_uuid")
     
     # print(product_uuid, user_uuid)
     # product = payload.get("product")
@@ -225,9 +247,9 @@ def addToBasket(request):
         return JsonResponse({"error": "product required"}, status=400)
     
     if user_type == "user":
-        table = "guest_basket"
-    else:
         table = "Basket"
+    else:
+        table = "guest_basket"
     
     res = supabase.table(table).insert({
         # "user_id": "0c05fb3d-6b91-4120-b61a-26f671f8ff1f",
@@ -261,8 +283,13 @@ def removeFromBasket(request):
     """
     try:
         payload = json.loads(request.body or "{}")
-        user_id = payload.get("user_uuid")
-        user_type = payload.get("user_type")
+        
+        token = request.COOKIES.get("token")
+        token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+        user_id = token_data.get("user_id")
+        user_type = token_data.get("user_type")
+        
+        
         product_id = payload.get("product_uuid")
         
         if user_type == "user":
@@ -336,9 +363,12 @@ def getFavourites(request):
     Uses 'getPage_Data' to fetch the user's favorite products.
     Returns the favorites as JSON.
     """
-    payload = json.loads(request.body)  # Parse JSON body
-    user_uuid = payload.get("user_uuid")
-    user_type = payload.get("user_type")
+    # payload = json.loads(request.body)  # Parse JSON body
+    token = request.COOKIES.get("token")
+    
+    token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+    user_uuid = token_data.get("user_id")
+    user_type = token_data.get("user_type")
     
     # data = getPage_Data("Favourites", res["uuid"])  # Fetch user's favorites
     # return JsonResponse(data)  # Return favorites as JSON
@@ -373,9 +403,12 @@ def addToFavourites(request):
     # }).execute()
     
     payload = json.loads(request.body)
-    user_uuid = payload.get("user_uuid")
+    token = request.COOKIES.get("token")
+    
+    token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+    user_uuid = token_data.get("user_id")
+    user_type = token_data.get("user_type")
     product_uuid = payload.get("product_uuid")
-    user_type = payload.get("user_type")
     
     print("user: ",user_uuid)
     print("product: ",product_uuid)
@@ -405,9 +438,12 @@ def removeFromFavourites(request):
     """
     try:
         payload = json.loads(request.body)
-        user_uuid = payload.get("user_uuid")
+        token = request.COOKIES.get("token")
+        token_data = jwt.decode(token.encode("utf-8"), "random string", algorithms=["HS256"])
+        user_uuid = token_data.get("user_id")
+        user_type = token_data.get("user_type")
+        
         product_uuid = payload.get("product_uuid")
-        user_type = payload.get("user_type")
         
         print("user: ",user_uuid)
         print("product: ",product_uuid)

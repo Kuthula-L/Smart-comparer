@@ -1,13 +1,16 @@
 import { AnimatePresence, motion } from "motion/react"
 import OauthBtn from "../components/OauthBtn"
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useRef, useState } from "react"
+import { Link, useNavigate } from "react-router"
 import {v4 as uuidv4} from "uuid";
+import SignUp from "../components/SignUp";
 
 
 
 function AuthenticationPage() {
-    
+
+
+    const navigate = useNavigate();
     const [show, setShow] = useState(false)
     const [formData, setFormData] = useState({
           email: '',
@@ -15,33 +18,87 @@ function AuthenticationPage() {
           confirmedPassword:""
         });
 
-    const [email, setEmail] = useState("")
+
+
+    // const [email, setEmail] = useState("")
     // const [password, setPassword] = useState("")
     // const [ConfirmedPassword, setConfirmedPassword] = useState("")
     const [emailBtnText, setText] = useState("continue")
     const userid = uuidv4();
+    // const data = useRef<any>({})
+    const [data, setdata] = useState<any>({})
 
 
     const handleSubmit = (e: React.FormEvent) => {
+
+      const submitData = {
+        "email":formData.email,
+        "password":formData.password
+
+      }
+
+
+      async function submit(type:string){
+        
+        const res = await fetch(`http://localhost:8000/auth/${type}/`, {
+          method:"POST",
+          credentials: "include",
+           headers: {"Content-Type": "application/json"},
+          body:JSON.stringify(submitData),
+       
+        })
+        
+         const data = await res.json()
+        // console.log("exsits?", data.current?.valid)
+        // setdata(result)
+
+        if (data.valid) {
+          navigate("/Dashboard/home")
+          document.cookie = "token=" + data.token + "; path=/; secure; samesite=strict";
+        } else{
+          console.log("valid?", data.valid)
+        }
+        // return data
+      
+      }
+
+          if (emailBtnText === "Sign Up"){
+            submit("register")
+
+
+          } 
+          
+          if(emailBtnText ==="Login"){
+              submit("login")
+
+
+
+          }
+
+          localStorage.setItem("user","user")
+
           e.preventDefault();
           console.log(formData);
         };
 
+
+
     function setEmailAuthBtn(){
       
       async function checkEmail(){
-        const res = await fetch("", {
-          method:"POST", 
-          body:JSON.stringify({"email":email})
+        const res = await fetch("http://127.0.0.1:8000/auth/checkEmail/", {
+          method:"POST",
+          body:JSON.stringify({"email":formData.email})
         })
         
         const data = await res.json()
+        console.log("exsits?", data.exists)
         
         
-        if (data.exsist) {
+        if (data.exists) {
             setText("Login") 
          } else{
-            setText("Sign up")
+            setText("Sign Up")
           
         }
       }
@@ -63,19 +120,23 @@ function AuthenticationPage() {
     function addGuest(){
         async function addGuest(){ 
           const  res = await fetch("http://127.0.0.1:8000/auth/add_guest/", 
-            {method:"POST", 
-              body:JSON.stringify({"user_uuid":userid})
+            {method:"GET", 
+              credentials: "include",
+              // body:JSON.stringify({"user_uuid":userid})
 
             })
           const data = await res.json()
        
         
         console.log(data)
+        document.cookie = "token=" + data.token + "; path=/; secure; samesite=strict";
 
         }
-        localStorage.setItem("user","guest")
+        // localStorage.setItem("user","guest")
 
         addGuest()
+
+        // localStorage.setItem("user","user")
     }
 
   return (
@@ -100,32 +161,33 @@ function AuthenticationPage() {
 
 
     
-        <div style={{display:"flex", flexDirection:"column", gap:"10px"}}>
+        <form onSubmit={handleSubmit} style={{display:"flex", flexDirection:"column", gap:"10px"}}>
 
-          <form onSubmit={handleSubmit}>
+          
             <div style={{width: 325, height: 46, borderRadius: 11,background: '#EFEFEF',}}>
-                <input type="email" onChange={(e) => setEmail(e.target.value)} placeholder="Enter email or phone number" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%", marginLeft:"5px"}}></input>
+                <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="Enter email or phone number" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%", marginLeft:"5px"}}></input>
             </div>
 
             <AnimatePresence initial={false}>
             {show?<motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} key="box" style={{width: 325, height: 46,  borderRadius: 11,background: '#EFEFEF',marginLeft:"5px"}}>
                 {/* display:show?"block":"none" */}
-                <input  type="password" onChange={(e)=>{setPassword(e.target.value)}}  placeholder="Enter Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
+                <input  type="password" value={formData.password}  onChange={(e) => setFormData({...formData, password: e.target.value})}  placeholder="Enter Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
             </motion.div>:null}</AnimatePresence>
 
 
             <AnimatePresence initial={false}>
-            {show?<motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} key="box2"  style={{width: 325, height: 46, borderRadius: 11,background: '#EFEFEF',marginLeft:"5px"}}>
+            {show && emailBtnText === "Sign Up"?<motion.div  initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0 }} key="box2"  style={{width: 325, height: 46, borderRadius: 11,background: '#EFEFEF',marginLeft:"5px"}}>
                 {/* display:show && emailBtnText ==="Sign up"?"block":"none" */}
-                <input type="password" onChange={(e)=>{setConfirmedPassword(e.target.value)}} placeholder="Confirm Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
+                <input type="password" value={formData.confirmedPassword} onChange={(e) => setFormData({...formData, confirmedPassword: e.target.value})} placeholder="Confirm Password" style={{textAlign: 'left', color: '#141414', fontSize: 16, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', width:"100%"}}></input>
             </motion.div>:null}
             </AnimatePresence>
+
             <button type={emailBtnText !== "continue"?"submit":"button"} onClick={setEmailAuthBtn} style={{width: 325, height: 46, background: '#FFC727', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', borderRadius: 11, border: '1px #E3DFDF solid'}}>
                 <div style={{textAlign: 'center', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word'}}>{emailBtnText}</div>
             </button>
 
             </form>
-        </div>
+        {/* </div> */}
         
         <div style={{width: 34, textAlign: 'center', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '300', wordWrap: 'break-word', display:show?"none":"flex"}}>or</div>
 

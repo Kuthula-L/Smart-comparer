@@ -198,7 +198,7 @@ const CardNav: React.FC<CardNavProps> = ({
             {/* , display:isDashboard?"none":"block", */}
             {children}
             </div>
-            <div style={{width:"150px", height:"50px", display:location.pathname === "/Dashboard/home"?"none":"flex", gap:"10px", justifySelf:'flex-start'}}>
+            <div style={{width:"150px", height:"50px", display:location.pathname === "/Dashboard/home"?"none":"flex", gap:"10px", justifySelf:'flex-start', justifyContent:"space-around"}}>
                 <img style={{placeSelf:'center', width:65, height:50, alignSelf:"center"}} src={logo} alt={logoAlt} className="logo" />
                 <div style={{ placeContent:'center', height:40, width:"auto", textWrap:"nowrap"}}>{logoAlt}</div>
             </div>
